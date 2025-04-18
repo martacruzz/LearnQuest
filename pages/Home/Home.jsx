@@ -19,7 +19,8 @@ export const Home = () => {
       <section className="hero">
         <h2>⚔️ Embark on Your Study Adventure</h2>
         <p>
-          Join fellow learners, conquer quests, and rise through the ranks of the academic kingdom!
+          Join fellow learners, conquer quests, and rise through the ranks of
+          the academic kingdom!
         </p>
         <button className="cta-btn">Start a Quest</button>
       </section>
