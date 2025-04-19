@@ -1,4 +1,4 @@
-function SidebarItem({ icon, label }) {
+function SidebarItemAcademic({ icon, label }) {
   return (
     <div className="group relative flex justify-center items-center">
       {icon}
@@ -9,4 +9,4 @@ function SidebarItem({ icon, label }) {
   );
 }
 
-export default SidebarItem;
+export default SidebarItemAcademic;
