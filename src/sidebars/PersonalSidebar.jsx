@@ -16,7 +16,7 @@ function Sidebar() {
           <SidebarItem
             icon={<Home className="w-8 h-8" />}
             label="Home"
-            to="/"
+            to="/personal"
           />
 
           <SidebarItem
