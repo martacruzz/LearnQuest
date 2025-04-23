@@ -28,7 +28,7 @@ const PersonalMiniLeaderboard = () => {
 
   return (
     <div className="bg-slate-800 p-6 rounded-xl shadow-xl text-white w-full mt-6 max-h-80 overflow-y-auto">
-      <h3 className="text-xl font-bold mb-4">🏆 Leaderboard</h3>
+      <h3 className="text-xl font-bold mb-4">🏆 Leaderboard 🏆</h3>
       <ul className="divide-y divide-slate-600">
         {users.map((user, index) => {
           const isCurrentUser = user.name === loggedInUser;

@@ -6,7 +6,7 @@ import { Home, Calendar, Settings, ClipboardList, Shield } from "lucide-react";
 
 function Sidebar() {
   return (
-    <div className="w-16 h-screen bg-slate-500 text-white flex flex-col justify-between py-8 px-2">
+    <div className="w-16 fixed h-screen bg-slate-500 text-white flex flex-col justify-between py-8 px-2">
       <div className="flex flex-col items-center gap-10">
         <div className="flex flex-col items-center gap-8 border-b border-slate-800 pb-6 w-full">
           <PersonalSwitcher />
@@ -22,7 +22,7 @@ function Sidebar() {
           <SidebarItem
             icon={<ClipboardList className="w-8 h-8" />}
             label="To-do"
-            to="/todo"
+            to="/personal/tasks"
           />
           <SidebarItem
             icon={<Calendar className="w-8 h-8" />}

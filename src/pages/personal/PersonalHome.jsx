@@ -5,24 +5,24 @@ import PersonalMiniLeaderboard from "../../components/PersonalMiniLeaderBoard";
 
 function PersonalHome() {
   return (
-    <div className="flex flex-col">
+    <div className="pl-16 flex flex-col">
       {/* Profile Banner and Achievements */}
-      <div className="flex flex-row items-start">
-        <div className="w-1/2">
+      <div className="flex flex-row items-start gap-4">
+        <div className="w-full">
           <UserProfileBanner />
         </div>
-        <div className="justify-right w-1/2">
+        <div className="justify-right w-full">
           <MonthlyProgressChart />
         </div>
       </div>
 
       {/* Montly stats and LeaderBoard */}
-      <div className="flex flex-row items-start">
-        <div className="w-1/2">
+      <div className="flex flex-row items-start gap-4">
+        <div className="w-full">
           <Achievements />
         </div>
 
-        <div className="justify-right w-1/2">
+        <div className="justify-right w-full">
           <PersonalMiniLeaderboard />
         </div>
 

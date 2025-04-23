@@ -6,6 +6,7 @@ import PersonalLayout from "./layouts/PersonalLayout"
 
 // ----------- PERSONAL PAGES -----------
 import PersonalHome from "./pages/personal/PersonalHome";
+import PersonalTasks from "./pages/personal/PersonalTasks";
 
 // ----------- ACADEMIC PAGES - STUDENT -----------
 
@@ -32,6 +33,7 @@ function App() {
       <Route path="/" element={<Navigate to="/personal" />} />
       <Route path="/personal" element={<PersonalLayout />}>
         <Route index element={<PersonalHome />} />
+        <Route path="tasks" element={<PersonalTasks />} />
       </Route>
     </Routes>
   );
