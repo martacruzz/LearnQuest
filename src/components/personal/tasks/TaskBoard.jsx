@@ -36,18 +36,24 @@ const initialTasks = {
 const TaskBoard = () => {
 
   const [tasks, setTasks] = useState(initialTasks);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeColumn, setActiveColumn] = useState(null);
   const [newTask, setNewTask] = useState({ id: uuidv4(), title: "", date: "" });
+
+  const [activeColumn, setActiveColumn] = useState(null);
+
   const [selectedTask, setSelectedTask] = useState(null);
   const [rightClickSelectedTask, setRightClickSelectedTask] = useState(null);
   const [selectedTaskColumn, setSelectedTaskColumn] = useState(null);
+
   const [selectedFilter, setSelectedFilter] = useState("all");
+  const [selectedSort, setSelectedSort] = useState("priority");
   const [customPriorities, setCustomPriorities] = useState(["chill", "urgent"]);
+
   const [contextMenu, setContextMenu] = useState(null); // Track the context menu state
-  const contextMenuRef = useRef(null); // reference to the context menu
   const [columnContextMenu, setColumnContextMenu] = useState(null);
+  const contextMenuRef = useRef(null); // reference to the context menu
   const columnContextMenuRef = useRef(null);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [isEditProjectModalOpen, setIsEditProjectModalOpen] = useState(false);
@@ -94,6 +100,43 @@ const TaskBoard = () => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedTask, selectedTaskColumn]);
+
+
+  // handler for sorting tasks
+  const sortTasks = (column, tasks) => {
+    const columnTasks = tasks || []; // Use an empty array if tasks[column] is null or undefined
+    const sortedTasks = [...columnTasks];
+
+    // If no sorting option is selected, return tasks as is
+    if (selectedSort === "none") {
+      return sortedTasks;
+    }
+
+    // currently only orders between chill and urgent (the defaults)
+    if (selectedSort === "priority") {
+      sortedTasks.sort((a, b) => {
+        const priorityOrder = { chill: 0, urgent: 1 };
+        const orderA = priorityOrder[a.priority] || 2;
+        const orderB = priorityOrder[b.priority] || 2;
+        return orderA - orderB;
+      });
+    }
+
+    if (selectedSort === "date") {
+      sortedTasks.sort((a, b) => {
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+        return dateA - dateB;
+      });
+    }
+
+    if (selectedSort === "done") {
+      sortedTasks.sort((a, b) => a.done - b.done);
+    }
+
+    return sortedTasks;
+  };
+
 
   // handlers for projects
   const closeColumnContextMenu = () => {
@@ -208,15 +251,20 @@ const TaskBoard = () => {
     return diff >= 0 && diff <= 3;
   };
 
+  // Filter and sort tasks based on filter and sort selection
   const filteredTasks = (column) => {
-    return tasks[column].filter((task) => {
+
+    let tasksList = tasks[column].filter((task) => {
       if (selectedFilter === "all") return true;
       if (selectedFilter === "done") return task.done;
       if (selectedFilter === "today") return !task.done && task.date && isToday(task.date);
       if (selectedFilter === "dueSoon") return !task.done && task.date && isDueSoon(task.date);
       return true;
     });
+
+    return sortTasks(column, tasksList);
   };
+
 
   // handler for calculating the percentage for each project
   const getCompletionPercentage = (columnKey) => {
@@ -233,6 +281,8 @@ const TaskBoard = () => {
       <TaskFilterBar
         selectedFilter={selectedFilter}
         setSelectedFilter={setSelectedFilter}
+        selectedSort={selectedSort}
+        setSelectedSort={setSelectedSort}
         onAddProject={() => setIsProjectModalOpen(true)}
       />
 
