@@ -87,9 +87,22 @@ const TaskBoard = () => {
 
 
   const handleEditSave = (updatedTask) => {
+    const formattedDate = updatedTask.date
+      ? new Date(updatedTask.date).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+      : "";
+
+    const updatedTaskWithFormattedDate = {
+      ...updatedTask,
+      date: formattedDate,
+    };
+
     setTasks((prevTasks) => {
       const updatedColumn = prevTasks[selectedTaskColumn].map((task) =>
-        task.id === updatedTask.id ? updatedTask : task
+        task.id === updatedTask.id ? updatedTaskWithFormattedDate : task
       );
       return {
         ...prevTasks,
@@ -101,6 +114,7 @@ const TaskBoard = () => {
     setSelectedTask(null);
     setSelectedTaskColumn(null);
   };
+
 
 
   // Handle context menu for right-click
@@ -210,9 +224,7 @@ const TaskBoard = () => {
                       type="checkbox"
                       checked={task.done}
                       onChange={(e) => {
-                        if (e.button === 0) {
-                          toggleDone(col.key, task.id)
-                        }
+                        toggleDone(col.key, task.id)
                       }}
                       className="accent-green-500"
                     />
