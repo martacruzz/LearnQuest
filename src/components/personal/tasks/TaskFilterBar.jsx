@@ -1,5 +1,5 @@
 import React from "react";
-import { ListFilter, Calendar, AlarmClock, CheckCircle } from "lucide-react";
+import { ListFilter, Calendar, AlarmClock, CheckCircle, Plus } from "lucide-react";
 
 const filters = [
   { key: "all", label: "All", icon: ListFilter },
@@ -8,9 +8,9 @@ const filters = [
   { key: "done", label: "Done", icon: CheckCircle },
 ];
 
-function TaskFilterBar({ selectedFilter, setSelectedFilter }) {
+function TaskFilterBar({ selectedFilter, setSelectedFilter, onAddProject }) {
   return (
-    <div className="flex gap-6 border-b border-slate-700 px-4 pb-2 text-sm font-medium">
+    <div className="flex gap-6 border-b border-slate-700 px-4 pb-2 text-sm font-medium items-center">
       {filters.map(({ key, label, icon: Icon }) => (
         <button
           key={key}
@@ -24,6 +24,15 @@ function TaskFilterBar({ selectedFilter, setSelectedFilter }) {
           {label}
         </button>
       ))}
+
+      {/* Add Task Button */}
+      <button
+        onClick={onAddProject}
+        className="ml-auto text-slate-400 hover:text-slate-800 transition-colors flex items-center gap-1"
+      >
+        <Plus className="w-4 h-4" />
+        Add Project
+      </button>
     </div>
   );
 }

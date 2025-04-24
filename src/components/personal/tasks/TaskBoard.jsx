@@ -5,6 +5,7 @@ import TaskDetailsModal from "./TaskDetailsModal";
 import TaskFilterBar from "./TaskFilterBar";
 import ContextMenu from './TasksContextMenu';
 import EditTaskModal from './EditTaskModal';
+import CreateProjectModal from './CreateProjectModal';
 
 const initialTasks = {
   review: [
@@ -44,32 +45,41 @@ const TaskBoard = () => {
   const [customPriorities, setCustomPriorities] = useState(["chill", "urgent"]);
   const [contextMenu, setContextMenu] = useState(null); // Track the context menu state
   const contextMenuRef = useRef(null); // reference to the context menu
+  const [columnContextMenu, setColumnContextMenu] = useState(null);
+  const columnContextMenuRef = useRef(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
 
-  const columns = [
+
+  const [columns, setColumns] = useState([
     { key: "review", title: "🧠 review" },
     { key: "ihc", title: "🛠️ IHC - PROJECT" },
     { key: "bd", title: "🗃️ BD project" },
     { key: "cd", title: "🔧 CD final project" },
     { key: "labs", title: "🧪 labs" },
-  ];
+  ]);
 
   // track clicks outside of the context menu
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (contextMenuRef.current && !contextMenuRef.current.contains(e.target)) {
+      if (
+        (contextMenuRef.current && !contextMenuRef.current.contains(e.target)) &&
+        (columnContextMenuRef.current && !columnContextMenuRef.current.contains(e.target))
+      ) {
         closeContextMenu();
+        closeColumnContextMenu();
       }
     };
 
-    if (contextMenu) {
+    if (contextMenu || columnContextMenu) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [contextMenu]);
+  }, [contextMenu, columnContextMenu]);
+
 
   // track delete key presses when context menu is active
   useEffect(() => {
@@ -85,7 +95,22 @@ const TaskBoard = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedTask, selectedTaskColumn]);
 
+  // handlers for projects
+  const closeColumnContextMenu = () => {
+    setColumnContextMenu(null);
+  };
 
+  const deleteColumn = (columnKey) => {
+    setColumns((prev) => prev.filter((col) => col.key !== columnKey));
+    setTasks((prev) => {
+      const updated = { ...prev };
+      delete updated[columnKey];
+      return updated;
+    });
+    closeColumnContextMenu();
+  };
+
+  // handlers for task editing
   const handleEditSave = (updatedTask) => {
     const formattedDate = updatedTask.date
       ? new Date(updatedTask.date).toLocaleDateString("en-US", {
@@ -147,6 +172,7 @@ const TaskBoard = () => {
     });
   };
 
+  // handler for the done task checkbox
   const toggleDone = (column, id) => {
     setTasks((prev) => {
       const updatedColumn = prev[column].map((task) =>
@@ -159,6 +185,7 @@ const TaskBoard = () => {
     });
   };
 
+  // handlers for the filter bar
   const isToday = (dateStr) => {
     const today = new Date();
     const date = new Date(dateStr);
@@ -188,11 +215,23 @@ const TaskBoard = () => {
       <TaskFilterBar
         selectedFilter={selectedFilter}
         setSelectedFilter={setSelectedFilter}
+        onAddProject={() => setIsProjectModalOpen(true)}
       />
+
 
       <div className="mt-4 flex gap-4 overflow-x-auto">
         {columns.map((col) => (
-          <div key={col.key} className="bg-slate-800 rounded-lg p-4 w-72 flex-shrink-0 shadow-lg">
+          <div key={col.key}
+            className="bg-slate-800 rounded-lg p-4 w-72 flex-shrink-0 shadow-lg"
+            onContextMenu={(e) => {
+              e.preventDefault();
+              setColumnContextMenu({
+                x: e.clientX,
+                y: e.clientY,
+                columnKey: col.key,
+              });
+            }}
+          >
             <h2 className="text-lg font-semibold mb-3">
               {col.title}
               <span className="text-sm text-gray-400 ml-2">0%</span>
@@ -247,10 +286,12 @@ const TaskBoard = () => {
         ))}
       </div>
 
+      {/* CONDITIONAL RENDERINGS */}
+
       {/* Render create task modal */}
       {isModalOpen && (
         <CreateTaskModal
-          columnTitle={activeColumn}
+          columnTitle={columns.find(col => col.key === activeColumn)?.title || activeColumn}
           onClose={() => setIsModalOpen(false)}
           customPriorities={customPriorities}
           setCustomPriorities={setCustomPriorities}
@@ -321,6 +362,37 @@ const TaskBoard = () => {
         />
       )}
 
+      {/* Render Context Menu for the columns - ADAPT THIS HERE */}
+      {columnContextMenu && (
+        <ContextMenu
+          x={columnContextMenu.x}
+          y={columnContextMenu.y}
+          ref={columnContextMenuRef}
+          onDelete={() => {
+            console.log(columnContextMenu.column);
+            deleteColumn(columnContextMenu.columnKey);
+            closeContextMenu();
+          }}
+          onEdit={() => {
+            setSelectedTask(contextMenu.task);
+            setSelectedTaskColumn(contextMenu.column);
+            setIsEditModalOpen(true);
+            closeContextMenu();
+          }}
+        />
+      )}
+
+      {/* Render create project modal if available */}
+      {isProjectModalOpen && (
+        <CreateProjectModal
+          onClose={() => setIsProjectModalOpen(false)}
+          onSave={(newProjectKey, newProjectTitle) => {
+            setColumns(prev => [...prev, { key: newProjectKey, title: newProjectTitle }]);
+            setTasks(prev => ({ ...prev, [newProjectKey]: [] }));
+            setIsProjectModalOpen(false);
+          }}
+        />
+      )}
     </div>
   );
 };
