@@ -24,6 +24,7 @@ const TaskDetailsModal = ({ task, onClose }) => {
           <p><span className="font-semibold">Title:</span> {task.title}</p>
           <p><span className="font-semibold">Date:</span> {task.date || "No date"}</p>
           <p><span className="font-semibold">XP:</span> {task.xp || "—"}</p>
+          <p><span className="font-semibold">Priority:</span> {task.priority || "—"}</p>
           <p><span className="font-semibold">Description:</span> {task.description || "No description"}</p>
           <p><span className="font-semibold">Done:</span> {task.done ? "✅ Yes" : "❌ No"}</p>
         </div>

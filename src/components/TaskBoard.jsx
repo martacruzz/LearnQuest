@@ -1,45 +1,148 @@
-import React, { useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
+import React, { useState, useEffect, useRef } from "react";
 import CreateTaskModal from "./CreateTaskModal";
 import TaskDetailsModal from "./TaskDetailsModal";
 import TaskFilterBar from "./TaskFilterBar";
+import ContextMenu from './TasksContextMenu';
+import EditTaskModal from './EditTaskModal';
 
 const initialTasks = {
   review: [
-    { title: "review C lectures", date: "April 22, 2025", done: true },
-    { title: "catch up on cd lectures - flashcards for lec 7 forward", date: "April 24, 2025", done: true },
+    { id: uuidv4(), title: "review C lectures", date: "April 22, 2025", done: true },
+    { id: uuidv4(), title: "catch up on cd lectures - flashcards for lec 7 forward", date: "April 24, 2025", done: true },
   ],
   ihc: [
-    { title: "implement personal home", date: "April 23, 2025", done: true },
-    { title: "implement personal tasks interface", date: "April 23, 2025", done: true },
-    { title: "implement personal calendar", date: "April 23, 2025", done: true },
-    { title: "implement personal clans interface", date: "April 23, 2025", done: true },
-    { title: "implement clan chat", date: "April 23, 2025", done: true },
+    { id: uuidv4(), title: "implement personal home", date: "April 23, 2025", done: true },
+    { id: uuidv4(), title: "implement personal tasks interface", date: "April 23, 2025", done: true },
+    { id: uuidv4(), title: "implement personal calendar", date: "April 23, 2025", done: true },
+    { id: uuidv4(), title: "implement personal clans interface", date: "April 23, 2025", done: true },
+    { id: uuidv4(), title: "implement clan chat", date: "April 23, 2025", done: true },
   ],
   bd: [
-    { title: "check out how to implement forms with flask + python", date: "", done: false },
+    { id: uuidv4(), title: "check out how to implement forms with flask + python", date: "", done: false },
   ],
   cd: [
-    { title: "implement p2p network", date: "April 21, 2025", done: false },
-    { title: "connect http server with p2p network", date: "April 21, 2025", done: false },
-    { title: "finish http server endpoint implementation (abstract)", date: "April 21, 2025", done: false },
+    { id: uuidv4(), title: "implement p2p network", date: "April 21, 2025", done: false },
+    { id: uuidv4(), title: "connect http server with p2p network", date: "April 21, 2025", done: false },
+    { id: uuidv4(), title: "finish http server endpoint implementation (abstract)", date: "April 21, 2025", done: false },
   ],
   labs: [
-    { title: "finish C lab", date: "April 22, 2025", done: true },
+    { id: uuidv4(), title: "finish C lab", date: "April 22, 2025", done: true },
   ],
 };
 
 const TaskBoard = () => {
+
   const [tasks, setTasks] = useState(initialTasks);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeColumn, setActiveColumn] = useState(null);
-  const [newTask, setNewTask] = useState({ title: "", date: "" });
+  const [newTask, setNewTask] = useState({ id: uuidv4(), title: "", date: "" });
   const [selectedTask, setSelectedTask] = useState(null);
+  const [rightClickSelectedTask, setRightClickSelectedTask] = useState(null);
+  const [selectedTaskColumn, setSelectedTaskColumn] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState("all");
+  const [customPriorities, setCustomPriorities] = useState(["chill", "urgent"]);
+  const [contextMenu, setContextMenu] = useState(null); // Track the context menu state
+  const contextMenuRef = useRef(null); // reference to the context menu
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const toggleDone = (column, index) => {
-    const updated = { ...tasks };
-    updated[column][index].done = !updated[column][index].done;
-    setTasks(updated);
+  const columns = [
+    { key: "review", title: "🧠 review" },
+    { key: "ihc", title: "🛠️ IHC - PROJECT" },
+    { key: "bd", title: "🗃️ BD project" },
+    { key: "cd", title: "🔧 CD final project" },
+    { key: "labs", title: "🧪 labs" },
+  ];
+
+  // track clicks outside of the context menu
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (contextMenuRef.current && !contextMenuRef.current.contains(e.target)) {
+        closeContextMenu();
+      }
+    };
+
+    if (contextMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [contextMenu]);
+
+  // track delete key presses when context menu is active
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Delete" && selectedTask && selectedTaskColumn) {
+        deleteTask(selectedTaskColumn, selectedTask.id);
+        setRightClickSelectedTask(null);
+        setSelectedTaskColumn(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedTask, selectedTaskColumn]);
+
+
+  const handleEditSave = (updatedTask) => {
+    setTasks((prevTasks) => {
+      const updatedColumn = prevTasks[selectedTaskColumn].map((task) =>
+        task.id === updatedTask.id ? updatedTask : task
+      );
+      return {
+        ...prevTasks,
+        [selectedTaskColumn]: updatedColumn,
+      };
+    });
+
+    setIsEditModalOpen(false);
+    setSelectedTask(null);
+    setSelectedTaskColumn(null);
+  };
+
+
+  // Handle context menu for right-click
+  const handleContextMenu = (e, task, column) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setRightClickSelectedTask(task);
+    setSelectedTaskColumn(column);
+    setContextMenu({
+      x: e.clientX,
+      y: e.clientY,
+      task,
+      column,
+    });
+  };
+
+  // Close context menu
+  const closeContextMenu = () => {
+    setContextMenu(null);
+  };
+
+  // Delete task function
+  const deleteTask = (column, taskId) => {
+    setTasks((prev) => {
+      const updatedColumn = prev[column].filter((task) => task.id !== taskId);
+      return {
+        ...prev,
+        [column]: updatedColumn,
+      };
+    });
+  };
+
+  const toggleDone = (column, id) => {
+    setTasks((prev) => {
+      const updatedColumn = prev[column].map((task) =>
+        task.id === id ? { ...task, done: !task.done } : task
+      );
+      return {
+        ...prev,
+        [column]: updatedColumn,
+      };
+    });
   };
 
   const isToday = (dateStr) => {
@@ -60,22 +163,14 @@ const TaskBoard = () => {
     return tasks[column].filter((task) => {
       if (selectedFilter === "all") return true;
       if (selectedFilter === "done") return task.done;
-      if (selectedFilter === "today") return task.date && isToday(task.date);
-      if (selectedFilter === "due soon") return task.date && isDueSoon(task.date);
+      if (selectedFilter === "today") return !task.done && task.date && isToday(task.date);
+      if (selectedFilter === "dueSoon") return !task.done && task.date && isDueSoon(task.date);
       return true;
     });
   };
 
-  const columns = [
-    { key: "review", title: "🧠 review" },
-    { key: "ihc", title: "🛠️ IHC - PROJECT" },
-    { key: "bd", title: "🗃️ BD project" },
-    { key: "cd", title: "🔧 CD final project" },
-    { key: "labs", title: "🧪 labs" },
-  ];
-
   return (
-    <div className="min-h-screen p-6 text-white max-w-screen-lg mx-auto overflow-x-auto">
+    <div className="min-h-screen p-6 text-white max-w-screen-xl mx-auto overflow-x-auto" onClick={closeContextMenu}>
       <TaskFilterBar
         selectedFilter={selectedFilter}
         setSelectedFilter={setSelectedFilter}
@@ -89,11 +184,21 @@ const TaskBoard = () => {
               <span className="text-sm text-gray-400 ml-2">0%</span>
             </h2>
             <div className="flex flex-col gap-3">
-              {filteredTasks(col.key).map((task, index) => (
+              {filteredTasks(col.key).map((task) => (
                 <div
-                  key={index}
-                  onClick={() => setSelectedTask(task)}
-                  className="bg-slate-700 rounded-md p-3 text-sm shadow flex flex-col gap-1"
+                  key={task.id}
+                  onClick={(e) => {
+
+                    if (e.button === 0) {
+                      // left click only
+                      setSelectedTask(task)
+                    } else if (e.button === 2) {
+                      // right click only
+                      setRightClickSelectedTask(task)
+                    }
+                  }}
+                  onContextMenu={(e) => handleContextMenu(e, task, col.key)} // Right-click for context menu
+                  className={`bg-slate-700 rounded-md p-3 text-sm shadow flex flex-col gap-1 ${selectedTask?.id === task.id ? 'border-2 border-blue-500' : ''}`}
                 >
                   <p className="font-medium">{task.title}</p>
                   {task.date && <p className="text-xs text-gray-300">{task.date}</p>}
@@ -104,7 +209,11 @@ const TaskBoard = () => {
                     <input
                       type="checkbox"
                       checked={task.done}
-                      onChange={() => toggleDone(col.key, index)}
+                      onChange={(e) => {
+                        if (e.button === 0) {
+                          toggleDone(col.key, task.id)
+                        }
+                      }}
                       className="accent-green-500"
                     />
                     Done
@@ -115,7 +224,7 @@ const TaskBoard = () => {
                 className="bg-slate-600 text-xs text-white px-2 py-1 rounded mt-2 hover:bg-slate-500"
                 onClick={() => {
                   setActiveColumn(col.key);
-                  setNewTask({ title: "", date: "" });
+                  setNewTask({ id: uuidv4(), title: "", date: "" });
                   setIsModalOpen(true);
                 }}
               >
@@ -126,10 +235,13 @@ const TaskBoard = () => {
         ))}
       </div>
 
+      {/* Render create task modal */}
       {isModalOpen && (
         <CreateTaskModal
           columnTitle={activeColumn}
           onClose={() => setIsModalOpen(false)}
+          customPriorities={customPriorities}
+          setCustomPriorities={setCustomPriorities}
           onSave={(taskData) => {
             const formattedDate = taskData.date
               ? new Date(taskData.date).toLocaleDateString("en-US", {
@@ -147,6 +259,8 @@ const TaskBoard = () => {
               ...taskData,
               date: formattedDate,
               done: false,
+              id: uuidv4(),
+              priority: taskData.priority || "chill", // default for a task is chill
             };
 
             const updated = { ...tasks };
@@ -157,9 +271,44 @@ const TaskBoard = () => {
         />
       )}
 
-      {selectedTask && (
+      {/* Render Edit task modal */}
+      {isEditModalOpen && selectedTask && (
+        <EditTaskModal
+          task={selectedTask}
+          onClose={() => {
+            setIsEditModalOpen(false);
+            setSelectedTask(null);
+            setSelectedTaskColumn(null);
+          }}
+          onSave={handleEditSave}
+        />
+      )}
+
+
+      {/* Render Modal with task details */}
+      {selectedTask && !isEditModalOpen && (
         <TaskDetailsModal task={selectedTask} onClose={() => setSelectedTask(null)} />
       )}
+
+      {/* Render Context Menu if available */}
+      {contextMenu && (
+        <ContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          ref={contextMenuRef}
+          onDelete={() => {
+            deleteTask(contextMenu.column, contextMenu.task.id);
+            closeContextMenu();
+          }}
+          onEdit={() => {
+            setSelectedTask(contextMenu.task);
+            setSelectedTaskColumn(contextMenu.column);
+            setIsEditModalOpen(true);
+            closeContextMenu();
+          }}
+        />
+      )}
+
     </div>
   );
 };
