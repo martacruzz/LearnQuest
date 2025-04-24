@@ -3,3 +3,4 @@ npm install tailwindcss @tailwindcss/vite
 npm install recharts
 npm install uuid
 npm install @headlessui/react
+npm install @hello-pangea/dnd

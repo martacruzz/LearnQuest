@@ -1,5 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import React, { useState, useEffect, useRef } from "react";
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+
 import CreateTaskModal from "./CreateTaskModal";
 import TaskDetailsModal from "./TaskDetailsModal";
 import TaskFilterBar from "./TaskFilterBar";
@@ -87,19 +89,66 @@ const TaskBoard = () => {
   }, [contextMenu, columnContextMenu]);
 
 
-  // track delete key presses when context menu is active
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === "Delete" && selectedTask && selectedTaskColumn) {
-        deleteTask(selectedTaskColumn, selectedTask.id);
-        setRightClickSelectedTask(null);
-        setSelectedTaskColumn(null);
-      }
-    };
+  // Handle the drag end event
+  const onDragEnd = (result) => {
+    const { source, destination, draggableId } = result;
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedTask, selectedTaskColumn]);
+    // If there's no destination, return
+    if (!destination) return;
+
+    const sourceColumn = source.droppableId;
+    const destColumn = destination.droppableId;
+
+    // If the source and destination are the same
+    if (sourceColumn === destColumn && selectedSort === "none") {
+      // If the task's index hasn't changed, do nothing
+      if (source.index === destination.index) {
+        return;
+      }
+
+      const sourceTasks = Array.from(tasks[sourceColumn]);
+
+      // Find the task to move
+      const [movedTask] = sourceTasks.splice(source.index, 1);
+
+      // Check if the task is already at the destination index (avoid duplicate)
+      if (sourceTasks[destination.index]?.id === movedTask.id) {
+        return; // Do nothing if the task is already at the destination index
+      }
+
+      // Add the task to the new position
+      sourceTasks.splice(destination.index, 0, movedTask);
+
+      // Update the state with the new tasks structure
+      setTasks((prevTasks) => ({
+        ...prevTasks,
+        [sourceColumn]: sourceTasks,
+      }));
+    } else {
+      // Move the task to a different column
+      const sourceTasks = Array.from(tasks[sourceColumn]);
+      const destTasks = Array.from(tasks[destColumn]);
+
+      // Find the task to move
+      const [movedTask] = sourceTasks.splice(source.index, 1);
+
+      // Check if the task already exists in the destination column
+      if (destTasks.some(task => task.id === movedTask.id) && selectedSort !== "none") {
+        return; // Do nothing if the task already exists
+      }
+
+      // Add the task to the destination column at the correct position
+      destTasks.splice(destination.index, 0, movedTask);
+
+      // Update the state with the new tasks structure
+      setTasks((prevTasks) => ({
+        ...prevTasks,
+        [sourceColumn]: sourceTasks,
+        [destColumn]: destTasks,
+      }));
+    }
+  };
+
 
 
   // handler for sorting tasks
@@ -287,75 +336,86 @@ const TaskBoard = () => {
       />
 
 
-      <div className="mt-4 flex gap-4 overflow-x-auto">
-        {columns.map((col) => (
-          <div key={col.key}
-            className="bg-slate-800 rounded-lg p-4 w-72 flex-shrink-0 shadow-lg"
-            onContextMenu={(e) => {
-              e.preventDefault();
-              setColumnContextMenu({
-                x: e.clientX,
-                y: e.clientY,
-                columnKey: col.key,
-              });
-            }}
-          >
-            <h2 className="text-lg font-semibold mb-3">
-              {col.title}
-              <span className="text-sm text-gray-400 ml-2">
-                {getCompletionPercentage(col.key)}%
-              </span>
-
-            </h2>
-            <div className="flex flex-col gap-3">
-              {filteredTasks(col.key).map((task) => (
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div className="mt-4 flex gap-4 overflow-x-auto">
+          {columns.map((col) => (
+            <Droppable key={col.key} droppableId={col.key}>
+              {(provided) => (
                 <div
-                  key={task.id}
-                  onClick={(e) => {
-
-                    if (e.button === 0) {
-                      // left click only
-                      setSelectedTask(task)
-                    } else if (e.button === 2) {
-                      // right click only
-                      setRightClickSelectedTask(task)
-                    }
+                  className="bg-slate-800 rounded-lg p-4 w-72 flex-shrink-0 shadow-lg"
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                    setColumnContextMenu({
+                      x: e.clientX,
+                      y: e.clientY,
+                      columnKey: col.key,
+                    });
                   }}
-                  onContextMenu={(e) => handleContextMenu(e, task, col.key)} // Right-click for context menu
-                  className={`bg-slate-700 rounded-md p-3 text-sm shadow flex flex-col gap-1 ${selectedTask?.id === task.id ? 'border-2 border-blue-500' : ''}`}
                 >
-                  <p className="font-medium">{task.title}</p>
-                  {task.date && <p className="text-xs text-gray-300">{task.date}</p>}
-                  <label
-                    className="flex items-center gap-2 text-xs"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={task.done}
-                      onChange={(e) => {
-                        toggleDone(col.key, task.id)
+                  <h2 className="text-lg font-semibold mb-3">
+                    {col.title}
+                    <span className="text-sm text-gray-400 ml-2">
+                      {getCompletionPercentage(col.key)}%
+                    </span>
+                  </h2>
+                  <div className="flex flex-col gap-3">
+                    {filteredTasks(col.key).map((task, index) => (
+                      <Draggable key={task.id} draggableId={task.id} index={index}>
+                        {(provided) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            onClick={(e) => {
+                              if (e.button === 0) {
+                                setSelectedTask(task);
+                              } else if (e.button === 2) {
+                                setRightClickSelectedTask(task);
+                              }
+                            }}
+                            onContextMenu={(e) => handleContextMenu(e, task, col.key)} // Right-click for context menu
+                            className={`bg-slate-700 rounded-md p-3 text-sm shadow flex flex-col gap-1 hover:bg-slate-600 ${selectedTask?.id === task.id ? 'border-2 border-blue-500' : ''}`}
+                          >
+                            <p className="font-medium">{task.title}</p>
+                            {task.date && <p className="text-xs text-gray-300">{task.date}</p>}
+                            <label
+                              className="flex items-center gap-2 text-xs hover:bg-slate-500 rounded"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <input
+                                type="checkbox"
+                                checked={task.done}
+                                onChange={(e) => {
+                                  toggleDone(col.key, task.id);
+                                }}
+                                className="accent-green-500"
+                              />
+                              Done
+                            </label>
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                    <button
+                      className="bg-slate-600 text-xs text-white px-2 py-1 rounded mt-2 hover:bg-slate-500"
+                      onClick={() => {
+                        setActiveColumn(col.key);
+                        setNewTask({ id: uuidv4(), title: "", date: "" });
+                        setIsModalOpen(true);
                       }}
-                      className="accent-green-500"
-                    />
-                    Done
-                  </label>
+                    >
+                      + New page
+                    </button>
+                  </div>
                 </div>
-              ))}
-              <button
-                className="bg-slate-600 text-xs text-white px-2 py-1 rounded mt-2 hover:bg-slate-500"
-                onClick={() => {
-                  setActiveColumn(col.key);
-                  setNewTask({ id: uuidv4(), title: "", date: "" });
-                  setIsModalOpen(true);
-                }}
-              >
-                + New page
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+              )}
+            </Droppable>
+          ))}
+        </div>
+      </DragDropContext>
 
       {/* CONDITIONAL RENDERINGS */}
 
