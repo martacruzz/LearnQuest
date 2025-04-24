@@ -6,6 +6,7 @@ import TaskFilterBar from "./TaskFilterBar";
 import ContextMenu from './TasksContextMenu';
 import EditTaskModal from './EditTaskModal';
 import CreateProjectModal from './CreateProjectModal';
+import EditProjectModal from './EditProjectModal';
 
 const initialTasks = {
   review: [
@@ -49,7 +50,7 @@ const TaskBoard = () => {
   const columnContextMenuRef = useRef(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
-
+  const [isEditProjectModalOpen, setIsEditProjectModalOpen] = useState(false);
 
   const [columns, setColumns] = useState([
     { key: "review", title: "🧠 review" },
@@ -62,11 +63,10 @@ const TaskBoard = () => {
   // track clicks outside of the context menu
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (
-        (contextMenuRef.current && !contextMenuRef.current.contains(e.target)) &&
-        (columnContextMenuRef.current && !columnContextMenuRef.current.contains(e.target))
-      ) {
+      if (contextMenuRef.current && !contextMenuRef.current.contains(e.target)) {
         closeContextMenu();
+      }
+      if (columnContextMenuRef.current && !columnContextMenuRef.current.contains(e.target)) {
         closeColumnContextMenu();
       }
     };
@@ -108,6 +108,14 @@ const TaskBoard = () => {
       return updated;
     });
     closeColumnContextMenu();
+  };
+
+  const updateProject = (updatedProject) => {
+    setColumns((prevColumns) =>
+      prevColumns.map((col) =>
+        col.key === updatedProject.key ? { ...col, title: updatedProject.title } : col
+      )
+    );
   };
 
   // handlers for task editing
@@ -369,18 +377,17 @@ const TaskBoard = () => {
           y={columnContextMenu.y}
           ref={columnContextMenuRef}
           onDelete={() => {
-            console.log(columnContextMenu.column);
             deleteColumn(columnContextMenu.columnKey);
             closeContextMenu();
           }}
           onEdit={() => {
-            setSelectedTask(contextMenu.task);
-            setSelectedTaskColumn(contextMenu.column);
-            setIsEditModalOpen(true);
+            setActiveColumn(columnContextMenu.columnKey); // <- assuming you have this
+            setIsEditProjectModalOpen(true);
             closeContextMenu();
           }}
         />
       )}
+
 
       {/* Render create project modal if available */}
       {isProjectModalOpen && (
@@ -393,6 +400,20 @@ const TaskBoard = () => {
           }}
         />
       )}
+
+      {/* Render edit project modal if available */}
+      {isEditProjectModalOpen && activeColumn && (
+        <EditProjectModal
+          project={columns.find((col) => col.key === activeColumn)}
+          onClose={() => setIsEditProjectModalOpen(false)}
+          onSave={(updatedProject) => {
+            updateProject(updatedProject);
+            setIsEditProjectModalOpen(false);
+          }}
+        />
+      )}
+
+
     </div>
   );
 };
