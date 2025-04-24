@@ -1,7 +1,7 @@
-import UserProfileBanner from "../../components/UserProfileBanner";
-import Achievements from "../../components/AchievementsSection";
-import MonthlyProgressChart from "../../components/MonthlyProgressChart";
-import PersonalMiniLeaderboard from "../../components/PersonalMiniLeaderBoard";
+import UserProfileBanner from "../../components/personal/home/UserProfileBanner";
+import Achievements from "../../components/personal/home/AchievementsSection";
+import MonthlyProgressChart from "../../components/personal/home/MonthlyProgressChart";
+import PersonalMiniLeaderboard from "../../components/personal/home/PersonalMiniLeaderBoard";
 
 function PersonalHome() {
   return (

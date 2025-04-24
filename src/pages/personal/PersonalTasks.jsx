@@ -1,4 +1,4 @@
-import TaskBoard from "../../components/TaskBoard";
+import TaskBoard from "../../components/personal/tasks/TaskBoard";
 
 function PersonalTasks() {
   return <TaskBoard />;
