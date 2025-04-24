@@ -218,6 +218,16 @@ const TaskBoard = () => {
     });
   };
 
+  // handler for calculating the percentage for each project
+  const getCompletionPercentage = (columnKey) => {
+    const columnTasks = tasks[columnKey];
+    if (!columnTasks || columnTasks.length === 0) return 0;
+
+    const completed = columnTasks.filter(task => task.done).length;
+    return Math.round((completed / columnTasks.length) * 100);
+  };
+
+
   return (
     <div className="min-h-screen p-6 text-white max-w-screen-xl mx-auto overflow-x-auto" onClick={closeContextMenu}>
       <TaskFilterBar
@@ -242,7 +252,10 @@ const TaskBoard = () => {
           >
             <h2 className="text-lg font-semibold mb-3">
               {col.title}
-              <span className="text-sm text-gray-400 ml-2">0%</span>
+              <span className="text-sm text-gray-400 ml-2">
+                {getCompletionPercentage(col.key)}%
+              </span>
+
             </h2>
             <div className="flex flex-col gap-3">
               {filteredTasks(col.key).map((task) => (
