@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import React, { useState, useEffect, useRef } from "react";
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import { Pencil } from 'lucide-react';
 
 import CreateTaskModal from "./CreateTaskModal";
 import TaskDetailsModal from "./TaskDetailsModal";
@@ -376,9 +377,29 @@ const TaskBoard = () => {
                               }
                             }}
                             onContextMenu={(e) => handleContextMenu(e, task, col.key)} // Right-click for context menu
-                            className={`bg-slate-700 rounded-md p-3 text-sm shadow flex flex-col gap-1 hover:bg-slate-600 ${selectedTask?.id === task.id ? 'border-2 border-blue-500' : ''}`}
+                            className={`group relative bg-slate-700 rounded-md p-3 text-sm shadow flex flex-col gap-1 hover:bg-slate-600 ${selectedTask?.id === task.id ? 'border-2 border-blue-500' : ''}`}
                           >
-                            <p className="font-medium">{task.title}</p>
+
+                            <div className="flex flex-row">
+                              <p className="font-medium">{task.title}</p>
+
+                              <div className="absolute top-2 right-2 hidden group-hover:block transition-opacity duration-500 ease-in-out opacity-0 group-hover:opacity-100">
+                                <button
+                                  className="bg-slate-600 hover:bg-slate-800 text-gray-200 p-1 rounded"
+                                  onClick={() => {
+                                    setSelectedTask(task);
+                                    setSelectedTaskColumn(col.key);
+                                    setIsEditModalOpen(true);
+                                  }}
+                                >
+                                  <Pencil size={16} />
+                                </button>
+                              </div>
+
+
+                            </div>
+
+
                             {task.date && <p className="text-xs text-gray-300">{task.date}</p>}
                             <label
                               className="flex items-center gap-2 text-xs hover:bg-slate-500 rounded"

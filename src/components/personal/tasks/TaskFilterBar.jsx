@@ -41,13 +41,14 @@ function TaskFilterBar({ selectedFilter, setSelectedFilter, selectedSort, setSel
 
   return (
     <div className="flex gap-6 border-b border-slate-700 px-4 pb-2 text-sm font-medium items-center">
+      {/* Filters Group */}
       {filters.map(({ key, label, icon: Icon }) => (
         <button
           key={key}
           onClick={() => setSelectedFilter(key)}
           className={`capitalize transition-colors flex items-center gap-1 ${selectedFilter === key
-            ? "border-b-2 border-white text-slate-800"
-            : "text-slate-400 hover:text-slate-800"
+              ? "border-b-2 border-white text-slate-800"
+              : "text-slate-400 hover:text-slate-800"
             }`}
         >
           <Icon className="w-4 h-4" />
@@ -55,41 +56,48 @@ function TaskFilterBar({ selectedFilter, setSelectedFilter, selectedSort, setSel
         </button>
       ))}
 
-      {/* Sorting Dropdown */}
-      <div className="relative" ref={dropdownRef}>
+      {/* Spacer pushes the following to the right */}
+      <div className="ml-auto flex items-center gap-6">
+        {/* Sorting Dropdown */}
+        <div className="relative" ref={dropdownRef}>
+          <button
+            onClick={toggleDropdown}
+            className="flex items-center gap-1 text-slate-400 hover:text-slate-800 transition-colors"
+          >
+            Sort by
+            <ChevronDown className="w-4 h-4" />
+          </button>
+
+          {isDropdownOpen && (
+            <div className="absolute top-8 left-0 z-50 bg-slate-800 rounded-md shadow-lg p-2">
+              {sortingOptions.map(({ key, label }) => (
+                <button
+                  key={key}
+                  onClick={() => {
+                    setSelectedSort(key);
+                    setIsDropdownOpen(false);
+                  }}
+                  className={`block text-slate-400 hover:text-white px-4 py-2 ${selectedSort === key ? "underline text-white" : ""
+                    }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Add Task Button */}
         <button
-          onClick={toggleDropdown} // Toggle the dropdown visibility on click
-          className="flex items-center gap-1 text-slate-400 hover:text-slate-800 transition-colors"
+          onClick={onAddProject}
+          className="text-slate-400 hover:text-slate-800 transition-colors flex items-center gap-1"
         >
-          Sort by
-          <ChevronDown className="w-4 h-4" />
+          <Plus className="w-4 h-4" />
+          Add Project
         </button>
-
-        {/* Conditionally render the dropdown based on isDropdownOpen */}
-        {isDropdownOpen && (
-          <div className="absolute top-8 left-0 bg-slate-800 rounded-md shadow-lg p-2">
-            {sortingOptions.map(({ key, label }) => (
-              <button
-                key={key}
-                onClick={() => setSelectedSort(key)}
-                className={`block text-slate-400 hover:text-white px-4 py-2 ${selectedSort === key ? "underline text-white" : ""}`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-        )}
       </div>
-
-      {/* Add Task Button */}
-      <button
-        onClick={onAddProject}
-        className="ml-auto text-slate-400 hover:text-slate-800 transition-colors flex items-center gap-1"
-      >
-        <Plus className="w-4 h-4" />
-        Add Project
-      </button>
     </div>
+
   );
 }
 
