@@ -7,6 +7,7 @@ import PersonalLayout from "./layouts/PersonalLayout"
 // ----------- PERSONAL PAGES -----------
 import PersonalHome from "./pages/personal/PersonalHome";
 import PersonalTasks from "./pages/personal/PersonalTasks";
+import PersonalCalendar from "./pages/personal/PersonalCalendar";
 
 // ----------- ACADEMIC PAGES - STUDENT -----------
 
@@ -30,10 +31,10 @@ function App() {
         <Route path="settings" element={<Placeholder text="Settings" />} />
       </Route>
 
-      <Route path="/" element={<Navigate to="/personal" />} />
       <Route path="/personal" element={<PersonalLayout />}>
         <Route index element={<PersonalHome />} />
         <Route path="tasks" element={<PersonalTasks />} />
+        <Route path="calendar" element={<PersonalCalendar />} />
       </Route>
     </Routes>
   );

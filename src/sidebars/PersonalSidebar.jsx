@@ -27,7 +27,7 @@ function Sidebar() {
           <SidebarItem
             icon={<Calendar className="w-8 h-8" />}
             label="Calendar"
-            to="/calendar"
+            to="/personal/calendar"
           />
           <SidebarItem
             icon={<Shield className="w-8 h-8" />}
