@@ -32,7 +32,7 @@ function Sidebar() {
           <SidebarItem
             icon={<Shield className="w-8 h-8" />}
             label="Clans"
-            to="/clans"
+            to="/personal/clans"
           />
         </div>
       </div>

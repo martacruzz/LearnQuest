@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import './index.css'
 
 // ----------- LAYOUTS -----------
 import TeacherLayout from "./layouts/TeacherLayout";
@@ -8,6 +9,7 @@ import PersonalLayout from "./layouts/PersonalLayout"
 import PersonalHome from "./pages/personal/PersonalHome";
 import PersonalTasks from "./pages/personal/PersonalTasks";
 import PersonalCalendar from "./pages/personal/PersonalCalendar";
+import PersonalClansDashboard from "./pages/personal/PersonalClanDashboard";
 
 // ----------- ACADEMIC PAGES - STUDENT -----------
 
@@ -35,6 +37,7 @@ function App() {
         <Route index element={<PersonalHome />} />
         <Route path="tasks" element={<PersonalTasks />} />
         <Route path="calendar" element={<PersonalCalendar />} />
+        <Route path="clans" element={<PersonalClansDashboard />} />
       </Route>
     </Routes>
   );
