@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ClanNavBar from "./ClanNavbar";
+import WeeklyProgressCircle from "./WeeklyProgressCircle";
 
 function ClanDashboard({ clan }) {
   const {
@@ -19,11 +20,44 @@ function ClanDashboard({ clan }) {
     100
   );
 
-  return (
+  // ➡️ Add these new animated states
+  const [animatedXpPercentage, setAnimatedXpPercentage] = useState(0);
+  const [displayedXp, setDisplayedXp] = useState(0);
 
+  // Animate XP bar width
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setAnimatedXpPercentage(xpPercentage);
+    }, 100);
+
+    return () => clearTimeout(timeout);
+  }, [xpPercentage]);
+
+  // Animate XP number (counting from 0 to currentXp)
+  useEffect(() => {
+    let frame;
+    const duration = 1000;
+    const start = performance.now();
+
+    function animate(now) {
+      const elapsed = now - start;
+      const progressRatio = Math.min(elapsed / duration, 1);
+      const value = Math.round(progressRatio * currentXp);
+      setDisplayedXp(value);
+
+      if (progressRatio < 1) {
+        frame = requestAnimationFrame(animate);
+      }
+    }
+
+    frame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frame);
+  }, [currentXp]);
+
+  return (
     <div className="ml-16 p-6 flex flex-col">
 
-      <ClanNavBar></ClanNavBar>
+      <ClanNavBar />
 
       <h1 className="text-slate-800 mt-4 mb-4 text-2xl font-semibold">{name}</h1>
 
@@ -61,17 +95,18 @@ function ClanDashboard({ clan }) {
 
           <h1 className="text-slate-800 mb-2 text-2xl border-b font-semibold">Clan Stats</h1>
 
-          {/* XP Progress */}
+          {/* 🛠 Animated XP Progress with Glow Effect on Full XP */}
           <div className="bg-slate-800 p-6 rounded-2xl shadow-lg">
             <h1 className="text-slate-400 mb-2 font-semibold">Clan XP</h1>
             <div className="w-full bg-slate-700 rounded-full h-4 overflow-hidden mb-2">
               <div
-                className="bg-green-500 h-4"
-                style={{ width: `${xpPercentage}%` }}
+                className={`bg-green-500 h-4 transition-all duration-1000 ease-out ${xpPercentage === 100 ? "shadow-lg shadow-green-500" : ""
+                  }`}
+                style={{ width: `${animatedXpPercentage}%` }}
               ></div>
             </div>
             <div className="text-slate-400 text-sm">
-              {currentXp} / {nextLevelXp} XP
+              {displayedXp} / {nextLevelXp} XP
             </div>
             <div className="text-slate-400 text-sm">
               Level: {level}
@@ -94,34 +129,7 @@ function ClanDashboard({ clan }) {
 
             {/* Weekly Progress */}
             <div className="bg-slate-800 p-6 rounded-2xl shadow-lg flex flex-col items-center justify-center">
-              <div className="relative w-24 h-24">
-                <svg className="w-full h-full" viewBox="0 0 100 100">
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="40"
-                    stroke="white"
-                    strokeWidth="8"
-                    fill="transparent"
-                    className="opacity-20"
-                  />
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="40"
-                    stroke="#22c55e"
-                    strokeWidth="8"
-                    fill="transparent"
-                    strokeDasharray={2 * Math.PI * 40}
-                    strokeDashoffset={2 * Math.PI * 40 * (1 - weeklyProgress / 100)}
-                    strokeLinecap="round"
-                    transform="rotate(-90 50 50)"
-                  />
-                </svg>
-                <div className="absolute inset-0 flex items-center justify-center text-lg font-bold text-slate-300">
-                  {Math.round(weeklyProgress)}%
-                </div>
-              </div>
+              <WeeklyProgressCircle weeklyProgress={weeklyProgress} />
               <div className="text-slate-400 text-sm mt-2">Weekly Progress</div>
             </div>
 
@@ -130,7 +138,6 @@ function ClanDashboard({ clan }) {
       </div>
 
     </div>
-
   );
 }
 

@@ -10,6 +10,8 @@ import PersonalHome from "./pages/personal/PersonalHome";
 import PersonalTasks from "./pages/personal/PersonalTasks";
 import PersonalCalendar from "./pages/personal/PersonalCalendar";
 import PersonalClansDashboard from "./pages/personal/PersonalClanDashboard";
+import PersonalClanLeaderBoard from "./pages/personal/PersonalClanLeaderBoard";
+import PersonalClanMembers from "./pages/personal/PersonalClanMembers";
 
 // ----------- ACADEMIC PAGES - STUDENT -----------
 
@@ -38,6 +40,8 @@ function App() {
         <Route path="tasks" element={<PersonalTasks />} />
         <Route path="calendar" element={<PersonalCalendar />} />
         <Route path="clans" element={<PersonalClansDashboard />} />
+        <Route path="clans/leaderboard" element={<PersonalClanLeaderBoard />} />
+        <Route path="clans/members" element={<PersonalClanMembers />} />
       </Route>
     </Routes>
   );
