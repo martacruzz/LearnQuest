@@ -1,19 +1,14 @@
-@import "tailwindcss";
-
+/* Shield Shape */
 .clip-shield {
-  clip-path: polygon(50% 0%,
-      90% 20%,
-      90% 60%,
-      50% 100%,
-      10% 60%,
-      10% 20%);
+  clip-path: polygon(50% 0%, 90% 15%, 100% 40%, 90% 65%, 50% 100%, 10% 65%, 0% 40%, 10% 15%);
   overflow: hidden;
 }
 
-/* New Shield Shine Effect */
+/* Adjusted Shield Effect with the new shape */
 .shield-effect {
   position: relative;
-  background: linear-gradient(135deg, #4b5563, #1f2937, #4b5563);
+  background: linear-gradient(135deg, #e5e7eb, #d1d5db, #e5e7eb);
+  /* Soft grey gradient */
   background-size: 400% 400%;
   animation: metallic-shine 8s ease infinite;
 }
@@ -33,45 +28,19 @@
   }
 }
 
-.golden-glow {
-  pointer-events: none;
-  transform: scale(1.1);
-  z-index: 1;
-  /* Make sure it shows above the background */
-}
-
-
-/* Breathing animation */
-@keyframes pulse {
-
-  0%,
-  100% {
-    opacity: 0.7;
-    transform: scale(1);
-    box-shadow: 0 0 20px 5px rgba(255, 215, 0, 0.4),
-      0 0 30px 10px rgba(255, 215, 0, 0.3),
-      0 0 40px 15px rgba(255, 215, 0, 0.2);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scale(1.05);
-    box-shadow: 0 0 30px 10px rgba(255, 215, 0, 0.6),
-      0 0 50px 15px rgba(255, 215, 0, 0.5),
-      0 0 70px 20px rgba(255, 215, 0, 0.3);
-  }
-}
-
-.pulse-glow {
-  animation: pulse 4s infinite ease-in-out;
-  background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, rgba(255, 215, 0, 0) 70%);
-  border-radius: 9999px;
-  /* Make it circular */
-  width: 100%;
-  height: 100%;
-}
-
-/* styles.css or somewhere global */
-.clip-diagonal {
-  clip-path: polygon(0 100%, 100% 70%, 100% 100%, 0% 100%);
+/* New polished gradient for the level banner */
+.level-banner {
+  background: linear-gradient(135deg, #edf2f7, #f7fafc, #edf2f7);
+  /* Light grayish gradient */
+  /* Subtle light gradient */
+  border-radius: 25px;
+  /* Rounded corners for smoother look */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  /* Softer shadow for depth */
+  padding: 1rem;
+  /* Padding around the text */
+  margin-top: -1rem;
+  /* Pull it up slightly for better integration with shield */
+  border: 1px solid #e2e8f0;
+  /* Soft border to define the shape */
 }

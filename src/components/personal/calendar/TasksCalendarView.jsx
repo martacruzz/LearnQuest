@@ -109,10 +109,10 @@ function TaskCalendarView({ tasks = {} }) {
             <div
               ref={provided.innerRef}
               {...provided.droppableProps}
-              className={`min-h-28 border border-slate-700 p-2 rounded-md flex flex-col gap-1 ${isSameMonth(day, monthStart)
-                  ? "bg-slate-800"
-                  : "bg-slate-700 text-slate-500"
-                } ${snapshot.isDraggingOver ? "bg-slate-600" : ""}`}
+              className={`min-h-28 border border-gray-200 p-2 rounded-md flex flex-col gap-1 ${isSameMonth(day, monthStart)
+                ? "bg-gray-100"
+                : "bg-gray-100 text-slate-500"
+                } ${snapshot.isDraggingOver ? "bg-gray-300" : ""}`}
             >
               <div className="text-xs text-slate-400">{formattedDate}</div>
 
@@ -157,7 +157,7 @@ function TaskCalendarView({ tasks = {} }) {
   }
 
   return (
-    <div className="ml-16 p-4 relative">
+    <div className="ml-16 p-10 relative">
       <div className="flex items-center justify-between mb-6 border-b border-slate-700">
         <h2 className="text-xl font-semibold text-slate-500">
           {format(currentMonth, "MMMM yyyy")}

@@ -27,34 +27,34 @@ const PersonalMiniLeaderboard = () => {
   };
 
   return (
-    <div className="bg-slate-800 p-6 rounded-xl shadow-xl text-white w-full mt-6 max-h-80 overflow-y-auto">
-      <h3 className="text-xl font-bold mb-4">🏆 Leaderboard 🏆</h3>
-      <ul className="divide-y divide-slate-600">
+    <div className="bg-white p-10 rounded-xl text-gray-800 w-full mt-6 max-h-80 overflow-y-auto">
+      <h3 className="text-3xl lg:text-4xl font-bold font-bold mb-4">🏆 Leaderboard 🏆</h3>
+      <ul className="divide-y divide-gray-200">
         {users.map((user, index) => {
           const isCurrentUser = user.name === loggedInUser;
           const TrendIcon =
             user.trend === "up" ? ArrowUpRight : ArrowDownRight;
-          const trendColor = user.trend === "up" ? "text-green-400" : "text-red-400";
+          const trendColor = user.trend === "up" ? "text-green-500" : "text-red-500";
 
           return (
             <li
               key={index}
-              className={`flex justify-between items-center py-2 px-3 rounded-lg ${isCurrentUser
-                ? "bg-cyan-700/30 border border-cyan-500"
-                : "hover:bg-slate-700/50"
-                } transition`}
+              className={`flex justify-between items-center py-2 px-3 rounded-lg transition ${isCurrentUser
+                ? "bg-cyan-100 border border-cyan-300"
+                : "hover:bg-gray-100"
+                }`}
             >
               <div className="flex items-center gap-3">
                 <span className="text-lg">{getMedal(index)}</span>
-                <span className={`font-medium ${isCurrentUser ? "text-cyan-300" : ""}`}>
+                <span className={`font-medium ${isCurrentUser ? "text-cyan-700" : ""}`}>
                   {user.name}
                   {isCurrentUser && " ⭐"}
                 </span>
               </div>
               <div className="flex items-center gap-4">
-                <span className="text-sm">Lvl {user.level}</span>
-                <span className="flex items-center gap-1">
-                  {user.xp} XP{" "}
+                <span className="text-sm text-gray-600">Lvl {user.level}</span>
+                <span className="flex items-center gap-1 text-sm font-medium">
+                  {user.xp} XP
                   <TrendIcon className={`w-4 h-4 ${trendColor}`} />
                 </span>
               </div>

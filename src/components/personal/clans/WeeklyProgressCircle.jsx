@@ -60,7 +60,7 @@ function WeeklyProgressCircle({ weeklyProgress }) {
           style={{ transition: "stroke-dashoffset 1s ease-out" }}
         />
       </svg>
-      <div className="absolute inset-0 flex items-center justify-center text-lg font-bold text-slate-300">
+      <div className="absolute inset-0 flex items-center justify-center text-lg font-bold text-slate-800">
         {displayedProgress}%
       </div>
     </div>

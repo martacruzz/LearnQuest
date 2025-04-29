@@ -3,7 +3,7 @@ import React from "react";
 function TaskCard({ title, project, priority, onClick }) {
   return (
     <div
-      className="flex flex-col bg-slate-600 hover:bg-slate-500 text-white px-2 py-1 rounded-md cursor-pointer transition-all text-xs"
+      className="flex flex-col bg-gray-500 hover:bg-slate-600 text-white px-2 py-1 rounded-md cursor-pointer transition-all text-xs"
       title={title}
       onClick={onClick}
     >

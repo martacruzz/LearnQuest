@@ -6,14 +6,14 @@ function ClanMembers({ members }) {
     <div className="ml-16 p-6 flex flex-col">
       <ClanNavBar />
 
-      <div className="bg-slate-800 rounded-2xl p-6 mt-4 shadow-lg">
-        <h2 className="text-xl font-semibold text-white mb-4">Clan Members</h2>
+      <div className="bg-gray-200 rounded-2xl p-6 mt-4 shadow-lg">
+        <h2 className="text-xl font-semibold text-slate-800 mb-4">Clan Members</h2>
 
         <div className="grid gap-4 max-h-[600px] overflow-y-auto">
           {members.map((member) => (
             <div
               key={member.id}
-              className="flex items-center justify-between bg-slate-700 hover:bg-slate-600 transition-colors p-4 rounded-xl shadow-sm"
+              className="flex items-center justify-between bg-gray-500 hover:bg-slate-600 transition-colors p-4 rounded-xl shadow-sm"
             >
               {/* Left: Avatar + Name */}
               <div className="flex items-center gap-4">
@@ -26,10 +26,10 @@ function ClanMembers({ members }) {
                   <p className="text-white font-medium">{member.name}</p>
                   <span
                     className={`text-xs px-2 py-1 rounded-full ${member.role === "Leader"
-                        ? "bg-yellow-500 text-black"
-                        : member.role === "Elder"
-                          ? "bg-purple-500 text-white"
-                          : "bg-slate-500 text-white"
+                      ? "bg-yellow-500 text-black"
+                      : member.role === "Elder"
+                        ? "bg-purple-500 text-white"
+                        : "bg-slate-500 text-white"
                       }`}
                   >
                     {member.role}

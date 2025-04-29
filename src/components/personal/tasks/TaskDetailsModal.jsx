@@ -7,20 +7,20 @@ const TaskDetailsModal = ({ task, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
       onClick={onClose}>
-      <div className="bg-slate-800 rounded-lg p-6 w-96 shadow-xl relative"
+      <div className="bg-gray-200 text-slate-800 rounded-lg p-6 w-96 shadow-xl relative"
         onClick={(e) => e.stopPropagation()}>
 
         <button
           onClick={onClose}
-          className="absolute top-3 right-5 text-white hover:text-red-400 text-2xl font-bold focus:outline-none"
+          className="absolute top-3 right-5 hover:text-red-400 text-2xl font-bold focus:outline-none"
           aria-label="Close"
         >
           &times;
         </button>
 
-        <h2 className="text-white text-xl font-semibold mb-4">Task Details</h2>
+        <h2 className="text-xl font-semibold mb-4">Task Details</h2>
 
-        <div className="text-white text-sm space-y-2">
+        <div className="text-sm space-y-2">
           <p><span className="font-semibold">Title:</span> {task.title}</p>
           <p><span className="font-semibold">Date:</span> {task.date || "No date"}</p>
           <p><span className="font-semibold">XP:</span> {task.xp || "—"}</p>

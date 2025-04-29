@@ -3,7 +3,7 @@ import ClanMembers from "../../components/personal/clans/ClanMembers";
 const members = [
   { id: 1, name: "Alec Stone", avatarUrl: "https://i.pravatar.cc/150?img=12", role: "Leader", xp: 560, nextLevelXp: 800, joinDate: "2024-04-01", completedTasks: 32 },
   { id: 2, name: "Bob Carter", avatarUrl: "https://i.pravatar.cc/150?img=2", role: "Elder", xp: 470, nextLevelXp: 700, joinDate: "2024-03-15", completedTasks: 28 },
-  { id: 3, name: "Clark Reed", avatarUrl: "https://i.pravatar.cc/150?img=3", role: "Member", xp: 240, nextLevelXp: 400, joinDate: "2024-06-02", completedTasks: 14 },
+  { id: 3, name: "Leonor Ferreira", avatarUrl: "/src/assets/images/leonor.jpg", role: "Member", xp: 580, nextLevelXp: 800, joinDate: "2024-06-02", completedTasks: 14 },
   { id: 4, name: "Daniel Wu", avatarUrl: "https://i.pravatar.cc/150?img=4", role: "Member", xp: 190, nextLevelXp: 300, joinDate: "2024-06-22", completedTasks: 9 },
   { id: 5, name: "Ella Kim", avatarUrl: "https://i.pravatar.cc/150?img=5", role: "Elder", xp: 420, nextLevelXp: 650, joinDate: "2024-02-28", completedTasks: 25 },
   { id: 6, name: "Finn Lopez", avatarUrl: "https://i.pravatar.cc/150?img=6", role: "Member", xp: 120, nextLevelXp: 200, joinDate: "2024-07-10", completedTasks: 6 },

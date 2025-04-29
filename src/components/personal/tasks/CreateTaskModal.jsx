@@ -61,16 +61,16 @@ const CreateTaskModal = ({ onClose, onSave, columnTitle }) => {
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50" onClick={onClose}>
-      <div className="bg-slate-800 rounded-lg p-6 w-96 shadow-xl relative" onClick={(e) => e.stopPropagation()}>
+      <div className="bg-white rounded-lg p-6 w-96 shadow-xl relative" onClick={(e) => e.stopPropagation()}>
         <button
           onClick={onClose}
-          className="absolute top-3 right-5 text-white hover:text-red-400 text-2xl font-bold focus:outline-none"
+          className="absolute top-3 right-5 text-gray-700 hover:text-red-400 text-2xl font-bold focus:outline-none"
           aria-label="Close"
         >
           &times;
         </button>
 
-        <h2 className="text-white text-lg mb-4 font-semibold">Add task to {columnTitle}</h2>
+        <h2 className="text-gray-800 text-lg mb-4 font-semibold">Add task to {columnTitle}</h2>
 
         {/* Title */}
         <input
@@ -78,7 +78,7 @@ const CreateTaskModal = ({ onClose, onSave, columnTitle }) => {
           placeholder="Task title"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          className="w-full mb-1 p-2 rounded bg-slate-700 text-white placeholder-gray-300"
+          className="w-full mb-1 p-2 rounded bg-gray-100 text-gray-800 placeholder-gray-400 border border-gray-300"
         />
         {errors.title && <p className="text-red-400 text-xs mb-2">{errors.title}</p>}
 
@@ -87,7 +87,7 @@ const CreateTaskModal = ({ onClose, onSave, columnTitle }) => {
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
-          className="w-full mb-1 p-2 rounded bg-slate-700 text-white"
+          className="w-full mb-1 p-2 rounded bg-gray-100 text-gray-800 border border-gray-300"
         />
 
         {/* XP */}
@@ -96,30 +96,30 @@ const CreateTaskModal = ({ onClose, onSave, columnTitle }) => {
           placeholder="XP"
           value={xp}
           onChange={(e) => setXp(e.target.value)}
-          className="w-full mb-1 p-2 rounded bg-slate-700 text-white placeholder-gray-300"
+          className="w-full mb-1 p-2 rounded bg-gray-100 text-gray-800 placeholder-gray-400 border border-gray-300"
         />
         {errors.xp && <p className="text-red-400 text-xs mb-2">{errors.xp}</p>}
 
         {/* Priority */}
         <div className="relative mb-1">
           <div
-            className="w-full p-2 rounded bg-slate-700 text-white flex items-center justify-between"
+            className="w-full p-2 rounded bg-gray-100 text-gray-800 flex items-center justify-between border border-gray-300"
             onClick={() => setIsOpen(!isOpen)} // Toggle isOpen state
           >
             <span>{priority.charAt(0).toUpperCase() + priority.slice(1)}</span>
-            <span className="text-gray-300">{isOpen ? "▲" : "▼"}</span>
+            <span className="text-gray-400">{isOpen ? "▲" : "▼"}</span>
           </div>
 
           {isOpen && (
-            <ul className="absolute w-full bg-slate-700 text-white mt-1 rounded shadow-lg z-10">
+            <ul className="absolute w-full bg-white text-gray-800 mt-1 rounded shadow-lg z-10 border border-gray-300">
               <li
-                className="p-2 hover:bg-slate-600 cursor-pointer"
+                className="p-2 hover:bg-gray-100 cursor-pointer"
                 onClick={() => { setPriority("chill"); setIsOpen(false); }}
               >
                 Chill
               </li>
               <li
-                className="p-2 hover:bg-slate-600 cursor-pointer"
+                className="p-2 hover:bg-gray-100 cursor-pointer"
                 onClick={() => { setPriority("urgent"); setIsOpen(false); }}
               >
                 Urgent
@@ -129,7 +129,7 @@ const CreateTaskModal = ({ onClose, onSave, columnTitle }) => {
               {customPriorities.map((custom, index) => (
                 <li
                   key={index}
-                  className="p-2 hover:bg-slate-600 cursor-pointer"
+                  className="p-2 hover:bg-gray-100 cursor-pointer"
                   onClick={() => { setPriority(custom); setIsOpen(false); }}
                 >
                   {custom}
@@ -137,7 +137,7 @@ const CreateTaskModal = ({ onClose, onSave, columnTitle }) => {
               ))}
 
               <li
-                className="p-2 hover:bg-slate-600 cursor-pointer"
+                className="p-2 hover:bg-gray-100 cursor-pointer"
                 onClick={() => setIsOpen(false)} // Close the dropdown if selecting custom priority
               >
                 <input
@@ -145,7 +145,7 @@ const CreateTaskModal = ({ onClose, onSave, columnTitle }) => {
                   value={customPriority}
                   onChange={(e) => setCustomPriority(e.target.value)}
                   placeholder="Custom Priority"
-                  className="w-full p-2 rounded bg-slate-700 text-white placeholder-gray-300"
+                  className="w-full p-2 rounded bg-gray-100 text-gray-800 placeholder-gray-400 border border-gray-300"
                   onClick={(e) => e.stopPropagation()} // Prevent dropdown from closing when clicking inside
                 />
 
@@ -169,7 +169,7 @@ const CreateTaskModal = ({ onClose, onSave, columnTitle }) => {
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="w-full mb-4 p-2 rounded bg-slate-700 text-white placeholder-gray-300 resize-none"
+          className="w-full mb-4 p-2 rounded bg-gray-100 text-gray-800 placeholder-gray-400 resize-none border border-gray-300"
           rows={3}
         />
 
@@ -177,13 +177,13 @@ const CreateTaskModal = ({ onClose, onSave, columnTitle }) => {
         <div className="flex justify-end gap-2">
           <button
             onClick={onClose}
-            className="bg-slate-600 hover:bg-slate-700 text-white px-4 py-1 rounded"
+            className="bg-gray-200 hover:bg-red-400 text-gray-800 px-4 py-1 rounded"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
-            className="bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-1 rounded"
+            className="bg-gray-200 hover:bg-green-400 text-black px-4 py-1 rounded"
           >
             Save
           </button>

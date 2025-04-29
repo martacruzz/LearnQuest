@@ -7,27 +7,27 @@ function ClanLeaderboard({ clans }) {
       <ClanNavBar />
 
       {/* Leaderboard Table */}
-      <div className="bg-slate-800 rounded-2xl p-6 mt-4 mb-4 shadow-lg">
+      <div className="bg-gray-200 rounded-2xl p-6 mt-4 mb-4 shadow-lg">
         <div className="overflow-x-auto">
           <table className="w-full text-left table-auto">
             <thead>
               <tr>
-                <th className="text-slate-400 px-6 py-3">Rank</th>
-                <th className="text-slate-400 px-6 py-3">Clan Name</th>
-                <th className="text-slate-400 px-6 py-3">Level</th>
-                <th className="text-slate-400 px-6 py-3">XP</th>
-                <th className="text-slate-400 px-6 py-3">Members</th>
-                <th className="text-slate-400 px-6 py-3">Tasks Completed</th>
+                <th className="text-gray-800 px-6 py-3">Rank</th>
+                <th className="text-gray-800 px-6 py-3">Clan Name</th>
+                <th className="text-gray-800 px-6 py-3">Level</th>
+                <th className="text-gray-800 px-6 py-3">XP</th>
+                <th className="text-gray-800 px-6 py-3">Members</th>
+                <th className="text-gray-800 px-6 py-3">Tasks Completed</th>
               </tr>
             </thead>
             <tbody>
               {clans.map((clan, index) => (
                 <tr
                   key={clan.id}
-                  className="hover:bg-slate-700"
+                  className="hover:bg-gray-300 transition-colors"
                 >
-                  <td className="px-6 py-4 text-slate-200">{index + 1}</td>
-                  <td className="px-6 py-4 text-slate-200 font-semibold flex items-center gap-3">
+                  <td className="px-6 py-4 text-gray-800">{index + 1}</td>
+                  <td className="px-6 py-4 text-gray-800 font-semibold flex items-center gap-3">
                     <img
                       src={clan.avatarUrl}
                       alt={clan.name}
@@ -35,12 +35,12 @@ function ClanLeaderboard({ clans }) {
                     />
                     {clan.name}
                   </td>
-                  <td className="px-6 py-4 text-slate-200">{clan.level}</td>
-                  <td className="px-6 py-4 text-slate-200">
+                  <td className="px-6 py-4 text-gray-800">{clan.level}</td>
+                  <td className="px-6 py-4 text-gray-800">
                     {clan.currentXp} / {clan.nextLevelXp}
                   </td>
-                  <td className="px-6 py-4 text-slate-200">{clan.memberCount}</td>
-                  <td className="px-6 py-4 text-slate-200">{clan.completedTasksThisWeek}</td>
+                  <td className="px-6 py-4 text-gray-800">{clan.memberCount}</td>
+                  <td className="px-6 py-4 text-gray-800">{clan.completedTasksThisWeek}</td>
                 </tr>
               ))}
             </tbody>

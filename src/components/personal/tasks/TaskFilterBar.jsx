@@ -47,8 +47,8 @@ function TaskFilterBar({ selectedFilter, setSelectedFilter, selectedSort, setSel
           key={key}
           onClick={() => setSelectedFilter(key)}
           className={`capitalize transition-colors flex items-center gap-1 ${selectedFilter === key
-              ? "border-b-2 border-white text-slate-800"
-              : "text-slate-400 hover:text-slate-800"
+            ? "border-b-2 border-white text-slate-800"
+            : "text-slate-400 hover:text-slate-800"
             }`}
         >
           <Icon className="w-4 h-4" />
@@ -69,7 +69,7 @@ function TaskFilterBar({ selectedFilter, setSelectedFilter, selectedSort, setSel
           </button>
 
           {isDropdownOpen && (
-            <div className="absolute top-8 left-0 z-50 bg-slate-800 rounded-md shadow-lg p-2">
+            <div className="absolute top-8 left-0 z-50 bg-gray-200 rounded-md shadow-lg p-2">
               {sortingOptions.map(({ key, label }) => (
                 <button
                   key={key}
@@ -77,7 +77,7 @@ function TaskFilterBar({ selectedFilter, setSelectedFilter, selectedSort, setSel
                     setSelectedSort(key);
                     setIsDropdownOpen(false);
                   }}
-                  className={`block text-slate-400 hover:text-white px-4 py-2 ${selectedSort === key ? "underline text-white" : ""
+                  className={`block text-slate-500 hover:text-slate-900 px-4 py-2 ${selectedSort === key ? "underline text-slate-900" : ""
                     }`}
                 >
                   {label}

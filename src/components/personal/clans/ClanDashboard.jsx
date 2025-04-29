@@ -59,15 +59,15 @@ function ClanDashboard({ clan }) {
 
       <ClanNavBar />
 
-      <h1 className="text-slate-800 mt-4 mb-4 text-2xl font-semibold">{name}</h1>
+      <h1 className="text-gray-800 mt-4 mb-4 text-2xl font-semibold">{name}</h1>
 
       <div className="flex gap-6">
-        <div className="bg-slate-800 p-6 shield-effect clip-shield overflow-hidden">
+        <div className="bg-gray-100 p-6 shield-effect clip-shield overflow-hidden">
 
           <div className="relative w-[350px] h-[400px] md:h-[500px] lg:h-[600px] flex items-center justify-center overflow-visible">
 
             {/* Shield Container */}
-            <div className="relative w-full h-full bg-slate-800 shield-effect clip-shield border-8 border-slate-800 overflow-hidden">
+            <div className="relative w-full h-full bg-gray-100 shield-effect clip-shield overflow-hidden">
               <img
                 src={avatarUrl}
                 alt="Clan Avatar"
@@ -75,12 +75,9 @@ function ClanDashboard({ clan }) {
               />
 
               {/* Diagonal Level Banner */}
-              <div className="absolute bottom-0 w-[150%] h-1/2 overflow-hidden flex items-end justify-center pb-4 z-10 transform rotate-[-45deg] bg-gradient-to-t from-slate-900/80 via-slate-900/40 to-transparent">
-                {/* Diagonal Background */}
-                <div className="w-full h-full bg-slate-900"></div>
-
-                {/* Rotated and Larger Level Text */}
-                <div className="absolute bottom-2/3 left-2/5 text-slate-200 text-4xl font-bold drop-shadow-md">
+              <div className="absolute bottom-0 w-[150%] h-1/2 overflow-hidden flex items-end justify-center pb-4 z-10 transform rotate-[-45deg] level-banner">
+                <div className="w-full h-full bg-gray-700"></div>
+                <div className="absolute bottom-2/3 left-2/5 text-gray-100 text-4xl font-bold drop-shadow-md">
                   Lv {level}
                 </div>
               </div>
@@ -90,25 +87,26 @@ function ClanDashboard({ clan }) {
 
         </div>
 
+
         {/* Main Content */}
         <div className="flex-1 flex flex-col gap-6">
 
-          <h1 className="text-slate-800 mb-2 text-2xl border-b font-semibold">Clan Stats</h1>
+          <h1 className="text-gray-800 mb-2 text-2xl border-b font-semibold">Clan Stats</h1>
 
           {/* 🛠 Animated XP Progress with Glow Effect on Full XP */}
-          <div className="bg-slate-800 p-6 rounded-2xl shadow-lg">
-            <h1 className="text-slate-400 mb-2 font-semibold">Clan XP</h1>
-            <div className="w-full bg-slate-700 rounded-full h-4 overflow-hidden mb-2">
+          <div className="bg-gray-100 p-6 rounded-2xl shadow-sm">
+            <h1 className="text-gray-600 mb-2 font-semibold">Clan XP</h1>
+            <div className="w-full bg-gray-300 rounded-full h-4 overflow-hidden mb-2">
               <div
-                className={`bg-green-500 h-4 transition-all duration-1000 ease-out ${xpPercentage === 100 ? "shadow-lg shadow-green-500" : ""
+                className={`bg-green-500 h-4 transition-all duration-1000 ease-out ${xpPercentage === 100 ? "shadow-md shadow-green-400" : ""
                   }`}
                 style={{ width: `${animatedXpPercentage}%` }}
               ></div>
             </div>
-            <div className="text-slate-400 text-sm">
+            <div className="text-gray-600 text-sm">
               {displayedXp} / {nextLevelXp} XP
             </div>
-            <div className="text-slate-400 text-sm">
+            <div className="text-gray-600 text-sm">
               Level: {level}
             </div>
           </div>
@@ -116,21 +114,21 @@ function ClanDashboard({ clan }) {
           {/* Stats Section */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Members */}
-            <div className="bg-slate-800 p-6 rounded-2xl shadow-lg flex flex-col items-center justify-center">
-              <div className="text-2xl font-bold text-slate-200">{memberCount}</div>
-              <div className="text-slate-400 text-sm mt-2">Members</div>
+            <div className="bg-gray-100 p-6 rounded-2xl shadow-sm flex flex-col items-center justify-center">
+              <div className="text-2xl font-bold text-gray-800">{memberCount}</div>
+              <div className="text-gray-600 text-sm mt-2">Members</div>
             </div>
 
             {/* Average Tasks */}
-            <div className="bg-slate-800 p-6 rounded-2xl shadow-lg flex flex-col items-center justify-center">
-              <div className="text-2xl font-bold text-slate-200">{avgTasksPerWeek}</div>
-              <div className="text-slate-400 text-sm mt-2">Avg Tasks/Week</div>
+            <div className="bg-gray-100 p-6 rounded-2xl shadow-sm flex flex-col items-center justify-center">
+              <div className="text-2xl font-bold text-gray-800">{avgTasksPerWeek}</div>
+              <div className="text-gray-600 text-sm mt-2">Avg Tasks/Week</div>
             </div>
 
             {/* Weekly Progress */}
-            <div className="bg-slate-800 p-6 rounded-2xl shadow-lg flex flex-col items-center justify-center">
+            <div className="bg-gray-100 p-6 rounded-2xl shadow-sm flex flex-col items-center justify-center">
               <WeeklyProgressCircle weeklyProgress={weeklyProgress} />
-              <div className="text-slate-400 text-sm mt-2">Weekly Progress</div>
+              <div className="text-gray-600 text-sm mt-2">Weekly Progress</div>
             </div>
 
           </div>
