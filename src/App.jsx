@@ -4,6 +4,7 @@ import './index.css'
 // ----------- LAYOUTS -----------
 import TeacherLayout from "./layouts/TeacherLayout";
 import PersonalLayout from "./layouts/PersonalLayout"
+import StudentLayout from "./layouts/StudentLayout";
 
 // ----------- PERSONAL PAGES -----------
 import PersonalHome from "./pages/personal/PersonalHome";
@@ -15,6 +16,13 @@ import PersonalClanMembers from "./pages/personal/PersonalClanMembers";
 import PersonalClansChat from "./pages/personal/PersonalClanChat";
 
 // ----------- ACADEMIC PAGES - STUDENT -----------
+import StudentHome from "./pages/Academic/Student/StudentHome";
+import StudentTasks from "./pages/Academic/Student/StudentTasks";
+import StudentCalendar from "./pages/Academic/Student/StudentCalendar";
+import StudentClansDashboard from "./pages/Academic/Student/StudentClanDashboard";
+import StudentClanLeaderBoard from "./pages/Academic/Student/StudentClanLeaderBoard";
+import StudentClanMembers from "./pages/Academic/Student/StudentClanMembers";
+import StudentClansChat from "./pages/Academic/Student/StudentClanChat";
 
 // ----------- ACADEMIC PAGES - PROFESSOR -----------
 import TeacherHome from "./pages/Academic/Teacher/TeacherHome";
@@ -27,15 +35,27 @@ function Placeholder({ text }) {
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/academic/teacher" />} />
+      {/*<Route path="/" element={<Navigate to="/academic/teacher" />} />
       <Route path="/academic/teacher" element={<TeacherLayout />}>
         <Route index element={<TeacherHome />} />
         <Route path="classes" element={<TeacherClasses />} />
         <Route path="calendar" element={<Placeholder text="Calendar" />} />
         <Route path="messages" element={<Placeholder text="Messages" />} />
         <Route path="settings" element={<Placeholder text="Settings" />} />
+      </Route>*/}
+
+      <Route path="/" element={<Navigate to="/academic/student" />} />
+      <Route path="/academic/student" element={<StudentLayout />}>
+        <Route index element={<StudentHome />} />
+        <Route path="tasks" element={<StudentTasks />} />
+        <Route path="calendar" element={<StudentCalendar />} />
+        <Route path="clans" element={<StudentClansDashboard />} />
+        <Route path="clans/leaderboard" element={<StudentClanLeaderBoard />} />
+        <Route path="clans/members" element={<StudentClanMembers />} />
+        <Route path="clans/chat" element={<StudentClansChat />} />
       </Route>
 
+      <Route path="/" element={<Navigate to="/personal" />} />
       <Route path="/personal" element={<PersonalLayout />}>
         <Route index element={<PersonalHome />} />
         <Route path="tasks" element={<PersonalTasks />} />
