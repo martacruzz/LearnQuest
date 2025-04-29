@@ -16,7 +16,7 @@ function AcademicSwitcher() {
     const next = active === "Academic" ? "Personal" : "Academic";
     setActive(next);
     setOpen(false);
-    navigate(next === "Academic" ? "/academic/teacher" : "/personal");
+    navigate(next === "Academic" ? "/academic/student" : "/personal");
   };
 
   return (
