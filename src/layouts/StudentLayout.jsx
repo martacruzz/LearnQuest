@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
-import AcademicSidebar from "../sidebars/AcademicSidebar";
+import AcademicSidebar from "../sidebars/StudentAcademicBar";
 
 function StudentLayout() {
   return (
-    <div className="flex">
+    <div className="flex relative z-10">
       <AcademicSidebar />
-      <main className="flex-1 p-6">
+      <main className="flex-1 p-6 overflow-visible">
         <Outlet />
       </main>
     </div>
@@ -13,3 +13,4 @@ function StudentLayout() {
 }
 
 export default StudentLayout;
+

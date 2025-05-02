@@ -1,6 +1,6 @@
 import React from "react";
 import SidebarItem from "../components/SidebarItem";
-import PersonalSwitcher from "../components/PersonalSwitcher";
+import AcademicSwitcher from "../components/AcademicSwitcher";
 import "../assets/Sidebar.css";
 import { Home, Calendar, Settings, ClipboardList, Shield } from "lucide-react";
 
@@ -9,7 +9,7 @@ function Sidebar() {
     <div className="w-16 fixed h-screen bg-slate-500 text-white flex flex-col justify-between py-8 px-2">
       <div className="flex flex-col items-center gap-10">
         <div className="flex flex-col items-center gap-8 border-b border-slate-800 pb-6 w-full">
-          <PersonalSwitcher />
+          <AcademicSwitcher />
         </div>
 
         <div className="flex flex-col items-center gap-15 border-b border-slate-800 pb-12 w-full">
