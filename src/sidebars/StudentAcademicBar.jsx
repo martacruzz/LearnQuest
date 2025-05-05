@@ -41,7 +41,7 @@ function Sidebar() {
         <SidebarItem
           icon={<Settings className="w-8 h-8" />}
           label="Settings"
-          to="/settings"
+          to="settings"
         />
       </div>
     </div>

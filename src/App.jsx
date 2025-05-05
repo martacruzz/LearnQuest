@@ -23,6 +23,7 @@ import StudentClansDashboard from "./pages/Academic/Student/StudentClanDashboard
 import StudentClanLeaderBoard from "./pages/Academic/Student/StudentClanLeaderBoard";
 import StudentClanMembers from "./pages/Academic/Student/StudentClanMembers";
 import StudentClansChat from "./pages/Academic/Student/StudentClanChat";
+import StudentSettings from "./pages/Academic/Student/StudentSettings";
 
 // ----------- ACADEMIC PAGES - PROFESSOR -----------
 import TeacherHome from "./pages/Academic/Teacher/TeacherHome";
@@ -53,6 +54,7 @@ function App() {
         <Route path="clans/leaderboard" element={<StudentClanLeaderBoard />} />
         <Route path="clans/members" element={<StudentClanMembers />} />
         <Route path="clans/chat" element={<StudentClansChat />} />
+        <Route path="settings" element={<StudentSettings />} />
       </Route>
 
       <Route path="/" element={<Navigate to="/personal" />} />
