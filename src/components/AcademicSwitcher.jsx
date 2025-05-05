@@ -20,7 +20,7 @@ function AcademicSwitcher() {
   };
 
   return (
-    <div className="relative w-12 h-12">
+    <div className="relative w-14 h-14 left-0.75">
       {/* Bolinha do modo atual */}
       <div
         onClick={() => setOpen(!open)}
@@ -36,7 +36,7 @@ function AcademicSwitcher() {
       {open && (
         <div
           onClick={handleSwitch}
-          className="absolute top-0 left-14 w-12 h-12 rounded-full bg-slate-700 flex items-center justify-center cursor-pointer hover:scale-105 transition shadow animate-slide-in"
+          className="group absolute top-0 left-14 w-12 h-12 rounded-full bg-slate-700 flex items-center justify-center cursor-pointer hover:scale-105 transition shadow animate-slide-in"
         >
           {icons[active === "Academic" ? "Personal" : "Academic"]}
         </div>
