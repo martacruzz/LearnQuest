@@ -1,14 +1,9 @@
 import { Plus, GraduationCap } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function TeacherClasses() {
   const [turmas, setTurmas] = useState([
-    {
-      curso: "Ciências e Tecnologias",
-      ano: "11º",
-      turma: "A",
-      disciplina: "Matemática A",
-    },
     { curso: "Humanidades", ano: "12º", turma: "B", disciplina: "História A" },
   ]);
 
@@ -229,9 +224,12 @@ function TeacherClasses() {
         {/* Lista de turmas + botão adicionar */}
         <div className="flex flex-wrap gap-20 items-center">
           {turmasOrdenadas.map((t, index) => (
-            <div
+            <Link
               key={index}
-              className="w-65 h-40 bg-slate-700 rounded-3xl flex flex-col items-center justify-center hover:scale-105 transition"
+              to={`/academic/teacher/discipline/${encodeURIComponent(
+                t.disciplina
+              )}`}
+              className="w-65 h-40 bg-slate-700 rounded-3xl flex flex-col items-center justify-center hover:scale-105 transition no-underline text-white"
             >
               <GraduationCap className="w-12 h-12 mb-2" />
               <p className="text-lg font-bold">{t.disciplina}</p>
@@ -240,7 +238,7 @@ function TeacherClasses() {
                 {t.turma}
               </p>
               <p className="text-xs">{t.curso}</p>
-            </div>
+            </Link>
           ))}
 
           {/* Botão de adicionar turma */}

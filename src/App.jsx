@@ -1,9 +1,9 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import './index.css'
+import "./index.css";
 
 // ----------- LAYOUTS -----------
 import TeacherLayout from "./layouts/TeacherLayout";
-import PersonalLayout from "./layouts/PersonalLayout"
+import PersonalLayout from "./layouts/PersonalLayout";
 import StudentLayout from "./layouts/StudentLayout";
 
 // ----------- PERSONAL PAGES -----------
@@ -27,6 +27,7 @@ import StudentClansChat from "./pages/Academic/Student/StudentClanChat";
 // ----------- ACADEMIC PAGES - PROFESSOR -----------
 import TeacherHome from "./pages/Academic/Teacher/TeacherHome";
 import TeacherClasses from "./pages/Academic/Teacher/TeacherClasses";
+import TeacherDisciplinePage from "./pages/Academic/Teacher/TeacherDisciplinePage";
 
 function Placeholder({ text }) {
   return <h1 style={{ color: "white" }}>{text} Page</h1>;
@@ -35,16 +36,26 @@ function Placeholder({ text }) {
 function App() {
   return (
     <Routes>
-      {/*<Route path="/" element={<Navigate to="/academic/teacher" />} />
+      <Route
+        path="/academic/student"
+        element={<Navigate to="/academic/teacher" />}
+      />
+
+      <Route path="/" element={<Navigate to="/academic/teacher" />} />
+
       <Route path="/academic/teacher" element={<TeacherLayout />}>
         <Route index element={<TeacherHome />} />
         <Route path="classes" element={<TeacherClasses />} />
         <Route path="calendar" element={<Placeholder text="Calendar" />} />
         <Route path="messages" element={<Placeholder text="Messages" />} />
         <Route path="settings" element={<Placeholder text="Settings" />} />
-      </Route>*/}
+        <Route
+          path="discipline/:disciplinaId"
+          element={<TeacherDisciplinePage />}
+        />
+      </Route>
 
-      <Route path="/" element={<Navigate to="/academic/student" />} />
+      {/* <Route path="/" element={<Navigate to="/academic/student" />} />
       <Route path="/academic/student" element={<StudentLayout />}>
         <Route index element={<StudentHome />} />
         <Route path="tasks" element={<StudentTasks />} />
@@ -53,7 +64,7 @@ function App() {
         <Route path="clans/leaderboard" element={<StudentClanLeaderBoard />} />
         <Route path="clans/members" element={<StudentClanMembers />} />
         <Route path="clans/chat" element={<StudentClansChat />} />
-      </Route>
+      </Route> */}
 
       <Route path="/" element={<Navigate to="/personal" />} />
       <Route path="/personal" element={<PersonalLayout />}>
