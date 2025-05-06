@@ -20,14 +20,14 @@ function AcademicSwitcher() {
   };
 
   return (
-    <div className="relative w-12 h-12">
+    <div className="relative w-14 h-14 left-0.75">
       {/* Bolinha do modo atual */}
       <div
         onClick={() => setOpen(!open)}
         className="group w-12 h-12 rounded-full bg-slate-700 flex items-center justify-center cursor-pointer hover:scale-105 transition shadow"
       >
         {icons[active]}
-        <span className="absolute left-14 top-1/2 -translate-y-1/2 bg-slate-800 text-white text-xs px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap z-10">
+        <span className="absolute left-14 top-1/2 -translate-y-1/2 bg-slate-800 text-white text-xs px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap z-[9999]">
           {active}
         </span>
       </div>
@@ -36,7 +36,7 @@ function AcademicSwitcher() {
       {open && (
         <div
           onClick={handleSwitch}
-          className="absolute top-0 left-14 w-12 h-12 rounded-full bg-slate-700 flex items-center justify-center cursor-pointer hover:scale-105 transition shadow animate-slide-in"
+          className="group absolute top-0 left-14 w-12 h-12 rounded-full bg-slate-700 flex items-center justify-center cursor-pointer hover:scale-105 transition shadow animate-slide-in"
         >
           {icons[active === "Academic" ? "Personal" : "Academic"]}
         </div>
