@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import "./index.css";
-import Initial from "./pages/Initial"
+import Initial from "./pages/Initial";
 
 // ----------- LAYOUTS -----------
 import TeacherLayout from "./layouts/TeacherLayout";
@@ -30,14 +30,12 @@ import StudentSettings from "./pages/Academic/Student/StudentSettings";
 import TeacherHome from "./pages/Academic/Teacher/TeacherHome";
 import TeacherClasses from "./pages/Academic/Teacher/TeacherClasses";
 import TeacherDisciplinePage from "./pages/Academic/Teacher/TeacherDisciplinePage";
-
-
+import TeacherCalendar from "./pages/Academic/Teacher/TeacherCalendar";
+import TeacherChat from "./pages/Academic/Teacher/TeacherChat";
 
 function Placeholder({ text }) {
   return <h1 style={{ color: "white" }}>{text} Page</h1>;
 }
-
-
 
 function App() {
   return (
@@ -49,10 +47,13 @@ function App() {
       <Route path="/academic/teacher" element={<TeacherLayout />}>
         <Route index element={<TeacherHome />} />
         <Route path="classes" element={<TeacherClasses />} />
-        <Route path="calendar" element={<Placeholder text="Calendar" />} />
-        <Route path="messages" element={<Placeholder text="Messages" />} />
+        <Route path="calendar" element={<TeacherCalendar />} />
+        <Route path="messages" element={<TeacherChat />} />
         <Route path="settings" element={<Placeholder text="Settings" />} />
-        <Route path="discipline/:disciplinaId" element={<TeacherDisciplinePage />} />
+        <Route
+          path="discipline/:disciplinaId"
+          element={<TeacherDisciplinePage />}
+        />
       </Route>
 
       {/* LAYOUT STUDENT */}

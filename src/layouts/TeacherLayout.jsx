@@ -3,8 +3,8 @@ import AcademicSidebar from "../sidebars/AcademicSidebar";
 
 function TeacherLayout() {
   return (
-    <div className="flex">
-      <AcademicSidebar />
+    <div className="flex ">
+      <AcademicSidebar /> {/* sidebar fixa à esquerda */}
       <main className="flex-1 p-6">
         <Outlet />
       </main>
