@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import "./index.css";
+import Initial from "./pages/Initial"
 
 // ----------- LAYOUTS -----------
 import TeacherLayout from "./layouts/TeacherLayout";
@@ -30,33 +31,31 @@ import TeacherHome from "./pages/Academic/Teacher/TeacherHome";
 import TeacherClasses from "./pages/Academic/Teacher/TeacherClasses";
 import TeacherDisciplinePage from "./pages/Academic/Teacher/TeacherDisciplinePage";
 
+
+
 function Placeholder({ text }) {
   return <h1 style={{ color: "white" }}>{text} Page</h1>;
 }
 
+
+
 function App() {
   return (
     <Routes>
-      <Route
-        path="/academic/student"
-        element={<Navigate to="/academic/teacher" />}
-      />
+      {/* Página inicial com seleção de tipo de utilizador */}
+      <Route path="/" element={<Initial />} />
 
-      <Route path="/" element={<Navigate to="/academic/teacher" />} />
-
+      {/* LAYOUT PROFESSOR */}
       <Route path="/academic/teacher" element={<TeacherLayout />}>
         <Route index element={<TeacherHome />} />
         <Route path="classes" element={<TeacherClasses />} />
         <Route path="calendar" element={<Placeholder text="Calendar" />} />
         <Route path="messages" element={<Placeholder text="Messages" />} />
         <Route path="settings" element={<Placeholder text="Settings" />} />
-        <Route
-          path="discipline/:disciplinaId"
-          element={<TeacherDisciplinePage />}
-        />
+        <Route path="discipline/:disciplinaId" element={<TeacherDisciplinePage />} />
       </Route>
 
-      {/* <Route path="/" element={<Navigate to="/academic/student" />} />
+      {/* LAYOUT STUDENT */}
       <Route path="/academic/student" element={<StudentLayout />}>
         <Route index element={<StudentHome />} />
         <Route path="tasks" element={<StudentTasks />} />
@@ -66,9 +65,9 @@ function App() {
         <Route path="clans/members" element={<StudentClanMembers />} />
         <Route path="clans/chat" element={<StudentClansChat />} />
         <Route path="settings" element={<StudentSettings />} />
-      </Route> */}
+      </Route>
 
-      <Route path="/" element={<Navigate to="/personal" />} />
+      {/* LAYOUT PESSOAL */}
       <Route path="/personal" element={<PersonalLayout />}>
         <Route index element={<PersonalHome />} />
         <Route path="tasks" element={<PersonalTasks />} />
