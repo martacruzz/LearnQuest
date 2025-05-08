@@ -1,7 +1,7 @@
 import ClanChat from "../../../components/studentAcademic/clans/ClanChat";
 
-function PersonalClansChat() {
+function StudentClansChat() {
   return <ClanChat />;
 }
 
-export default PersonalClansChat
+export default StudentClansChat

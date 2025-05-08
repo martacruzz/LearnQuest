@@ -27,8 +27,8 @@ const dummyTasks = {
   ],
 };
 
-function PersonalCalendar() {
+function StudentCalendar() {
   return <TaskCalendarView tasks={dummyTasks} />;
 }
 
-export default PersonalCalendar
+export default StudentCalendar
