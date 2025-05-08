@@ -61,6 +61,9 @@ const TaskBoard = () => {
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [isEditProjectModalOpen, setIsEditProjectModalOpen] = useState(false);
 
+  const [completedProjects, setCompletedProjects] = useState({});
+
+
   const [columns, setColumns] = useState([
     { key: "review", title: "🧠 review" },
     { key: "ihc", title: "🛠️ IHC - PROJECT" },
@@ -88,6 +91,21 @@ const TaskBoard = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [contextMenu, columnContextMenu]);
+
+
+  useEffect(() => {
+    const updatedCompleted = {};
+
+    for (const [columnKey, taskList] of Object.entries(tasks)) {
+      if (taskList.length > 0 && taskList.every(task => task.done)) {
+        updatedCompleted[columnKey] = true;
+      } else {
+        updatedCompleted[columnKey] = false;
+      }
+    }
+
+    setCompletedProjects(updatedCompleted);
+  }, [tasks]);
 
 
   // Handle the drag end event
@@ -339,102 +357,117 @@ const TaskBoard = () => {
 
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="mt-4 flex gap-4 overflow-x-auto">
-          {columns.map((col) => (
-            <Droppable key={col.key} droppableId={col.key}>
-              {(provided) => (
-                <div
-                  className="bg-white text-slate-800 rounded-lg p-4 w-72 flex-shrink-0 shadow-lg"
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  onContextMenu={(e) => {
-                    e.preventDefault();
-                    setColumnContextMenu({
-                      x: e.clientX,
-                      y: e.clientY,
-                      columnKey: col.key,
-                    });
-                  }}
-                >
-                  <h2 className="text-lg font-semibold mb-3">
-                    {col.title}
-                    <span className="text-sm text-gray-500 ml-2">
-                      {getCompletionPercentage(col.key)}%
-                    </span>
-                  </h2>
-                  <div className="flex flex-col gap-3">
-                    {filteredTasks(col.key).map((task, index) => (
-                      <Draggable key={task.id} draggableId={task.id} index={index}>
-                        {(provided) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            onClick={(e) => {
-                              if (e.button === 0) {
-                                setSelectedTask(task);
-                              } else if (e.button === 2) {
-                                setRightClickSelectedTask(task);
-                              }
-                            }}
-                            onContextMenu={(e) => handleContextMenu(e, task, col.key)} // Right-click for context menu
-                            className={`group relative bg-gray-200 rounded-md p-3 text-sm shadow flex flex-col gap-1 hover:bg-gray-300 ${selectedTask?.id === task.id ? 'border-2 border-blue-500' : ''}`}
-                          >
+          {columns
+            .filter(col => {
+              const isCompleted = completedProjects[col.key];
 
-                            <div className="flex flex-row">
-                              <p className="font-medium">{task.title}</p>
+              // Show only completed projects if 'done' is selected
+              if (selectedFilter === "done") return isCompleted;
 
-                              <div className="absolute top-2 right-2 hidden group-hover:block transition-opacity duration-500 ease-in-out opacity-0 group-hover:opacity-100">
-                                <button
-                                  className="bg-gray-400 hover:bg-gray-500 text-gray-200 p-1 rounded"
-                                  onClick={() => {
-                                    setSelectedTask(task);
-                                    setSelectedTaskColumn(col.key);
-                                    setIsEditModalOpen(true);
-                                  }}
-                                >
-                                  <Pencil size={16} />
-                                </button>
+              // For all other filters, exclude completed projects
+              return !isCompleted;
+            })
+            .map((col) => (
+
+
+              <Droppable key={col.key} droppableId={col.key}>
+                {(provided) => (
+                  <div
+                    className="bg-white text-slate-800 rounded-lg p-4 w-72 flex-shrink-0 shadow-lg"
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    onContextMenu={(e) => {
+                      e.preventDefault();
+                      setColumnContextMenu({
+                        x: e.clientX,
+                        y: e.clientY,
+                        columnKey: col.key,
+                      });
+                    }}
+                  >
+                    <h2 className="text-lg font-semibold mb-3">
+                      {col.title}
+                      {completedProjects[col.key] && (
+                        <span title="Project complete" className="ml-2 text-green-600">✅</span>
+                      )}
+                      <span className="text-sm text-gray-500 ml-2">
+                        {getCompletionPercentage(col.key)}%
+                      </span>
+                    </h2>
+                    <div className="flex flex-col gap-3">
+                      {filteredTasks(col.key).map((task, index) => (
+                        <Draggable key={task.id} draggableId={task.id} index={index}>
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              onClick={(e) => {
+                                if (e.button === 0) {
+                                  setSelectedTask(task);
+                                } else if (e.button === 2) {
+                                  setRightClickSelectedTask(task);
+                                }
+                              }}
+                              onContextMenu={(e) => handleContextMenu(e, task, col.key)} // Right-click for context menu
+                              className={`group relative bg-gray-200 rounded-md p-3 text-sm shadow flex flex-col gap-1 hover:bg-gray-300 ${selectedTask?.id === task.id ? 'border-2 border-blue-500' : ''}`}
+                            >
+
+                              <div className="flex flex-row">
+                                <p className="font-medium">{task.title}</p>
+
+                                <div className="absolute top-2 right-2 hidden group-hover:block transition-opacity duration-500 ease-in-out opacity-0 group-hover:opacity-100">
+                                  <button
+                                    className="bg-gray-400 hover:bg-gray-500 text-gray-200 p-1 rounded"
+                                    onClick={() => {
+                                      setSelectedTask(task);
+                                      setSelectedTaskColumn(col.key);
+                                      setIsEditModalOpen(true);
+                                    }}
+                                  >
+                                    <Pencil size={16} />
+                                  </button>
+                                </div>
+
+
                               </div>
 
 
+                              {task.date && <p className="text-xs text-slate-800 hover:bg-gray-200">{task.date}</p>}
+                              <label
+                                className="flex items-center gap-2 text-xs hover:bg-gray-200 rounded"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={task.done}
+                                  onChange={(e) => {
+                                    toggleDone(col.key, task.id);
+                                  }}
+                                  className="accent-green-500"
+                                />
+                                Done
+                              </label>
                             </div>
-
-
-                            {task.date && <p className="text-xs text-slate-800 hover:bg-gray-200">{task.date}</p>}
-                            <label
-                              className="flex items-center gap-2 text-xs hover:bg-gray-200 rounded"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <input
-                                type="checkbox"
-                                checked={task.done}
-                                onChange={(e) => {
-                                  toggleDone(col.key, task.id);
-                                }}
-                                className="accent-green-500"
-                              />
-                              Done
-                            </label>
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
-                    <button
-                      className="bg-slate-500 text-xs text-white px-2 py-1 rounded mt-2 hover:bg-slate-400"
-                      onClick={() => {
-                        setActiveColumn(col.key);
-                        setNewTask({ id: uuidv4(), title: "", date: "" });
-                        setIsModalOpen(true);
-                      }}
-                    >
-                      + New page
-                    </button>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                      <button
+                        className="bg-slate-500 text-xs text-white px-2 py-1 rounded mt-2 hover:bg-slate-400"
+                        onClick={() => {
+                          setActiveColumn(col.key);
+                          setNewTask({ id: uuidv4(), title: "", date: "" });
+                          setIsModalOpen(true);
+                        }}
+                      >
+                        + New page
+                      </button>
+                    </div>
                   </div>
-                </div>
-              )}
-            </Droppable>
-          ))}
+                )}
+              </Droppable>
+            ))}
         </div>
       </DragDropContext>
 
