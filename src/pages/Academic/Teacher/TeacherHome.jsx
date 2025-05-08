@@ -60,7 +60,7 @@ function TeacherHome() {
   );
 
   return (
-    <div className="p-2 ml-15 grid grid-cols-2 grid-rows-2 gap-2 text-slate-800">
+    <div className="p-0 ml-8 grid grid-cols-2 grid-rows-2 gap-2 text-slate-800">
       {/* PERFIL */}
       <div className="flex flex-col items-center justify-center text-center">
         <h2 className="text-3xl font-bold text-slate-800 mb-4">
@@ -75,7 +75,7 @@ function TeacherHome() {
       </div>
 
       {/* GRÁFICO XP */}
-      <div>
+      <div className="self-end">
         <div className="flex justify-between items-center mb-3">
           <h2 className="text-xl font-semibold text-slate-700">
             Class Progress
@@ -102,7 +102,7 @@ function TeacherHome() {
 
       {/* TAREFAS STATS */}
       <div className="flex flex-col gap-6">
-        <h2 className="text-xl font-semibold p-3 ml-6 flex items-center gap-2">
+        <h2 className="text-xl font-semibold p-3 ml-15 flex items-center gap-2">
           📋 Tarefas Criadas
         </h2>
 
@@ -132,7 +132,9 @@ function TeacherHome() {
       </div>
 
       {/* LEADERBOARD */}
-      <PersonalMiniLeaderboard />
+      <div className="self-start">
+        <PersonalMiniLeaderboard />
+      </div>
     </div>
   );
 }
