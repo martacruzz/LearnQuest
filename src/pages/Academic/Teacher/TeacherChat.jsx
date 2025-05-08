@@ -48,7 +48,7 @@ function TeacherChat() {
   };
 
   return (
-    <div className="flex p-5 ml-7 w-290s h-137 right-8">
+    <div className="flex p-0 ml-15 w-290s h-137 right-8">
       {/* Sidebar */}
       <div className="w-60 bg-slate-100 p-4 border-r border-slate-300 flex flex-col">
         <input

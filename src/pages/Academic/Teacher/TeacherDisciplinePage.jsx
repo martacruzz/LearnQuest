@@ -9,7 +9,7 @@ const TeacherDisciplinePage = () => {
   const [tab, setTab] = useState("chat");
 
   return (
-    <div className="p-6 ml-8 text-gray-800 mh-screen overflow-auto">
+    <div className="p-0 ml-15 text-gray-800 mh-screen overflow-auto">
       <h1 className="text-3xl font-bold text-slate-800 mb-1">
         {decodeURIComponent(disciplinaId)}
       </h1>
