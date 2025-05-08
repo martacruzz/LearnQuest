@@ -28,8 +28,8 @@ const members = [
 
 
 
-function PersonalClanMembers() {
+function StudentClanMembers() {
   return <ClanMembers members={members} />;
 }
 
-export default PersonalClanMembers
+export default StudentClanMembers

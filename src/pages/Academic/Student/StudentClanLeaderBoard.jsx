@@ -36,8 +36,8 @@ const clans = [
 ];
 
 
-function PersonalClanLeaderBoard() {
+function StudentClanLeaderBoard() {
   return <ClanLeaderboard clans={clans} />;
 }
 
-export default PersonalClanLeaderBoard
+export default StudentClanLeaderBoard

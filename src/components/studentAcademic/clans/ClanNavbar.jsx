@@ -3,10 +3,10 @@ import { Home, Trophy, Users, MessageCircle } from "lucide-react";
 import { Link, useLocation } from "react-router-dom"; // <-- useLocation added
 
 const pages = [
-  { key: "hq", label: "Clan HQ", icon: Home, path: "/personal/clans" },
-  { key: "lb", label: "Leader Board", icon: Trophy, path: "/personal/clans/leaderboard" },
-  { key: "members", label: "Members", icon: Users, path: "/personal/clans/members" },
-  { key: "chat", label: "Chat", icon: MessageCircle, path: "/personal/clans/chat" },
+  { key: "hq", label: "Clan HQ", icon: Home, path: "/academic/student/clans" },
+  { key: "lb", label: "Leader Board", icon: Trophy, path: "/academic/student/clans/leaderboard" },
+  { key: "members", label: "Members", icon: Users, path: "/academic/student/clans/members" },
+  { key: "chat", label: "Chat", icon: MessageCircle, path: "/academic/student/clans/chat" },
 ];
 
 function ClanNavBar() {
