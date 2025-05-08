@@ -13,8 +13,8 @@ const clan = {
 };
 
 
-function PersonalClansDashboard() {
+function StudentClansDashboard() {
   return <ClanDashboard clan={clan} />;
 }
 
-export default PersonalClansDashboard
+export default StudentClansDashboard

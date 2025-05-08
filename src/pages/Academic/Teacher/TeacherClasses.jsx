@@ -212,7 +212,7 @@ function TeacherClasses() {
       )}
 
       {/* Página Principal */}
-      <div className="text-white p-6">
+      <div className="text-white ml-8 p-8">
         {/* Título */}
         <div className="mb-6">
           <h1 className="text-4xl font-semibold -mt-4 text-slate-800 mb-2">
