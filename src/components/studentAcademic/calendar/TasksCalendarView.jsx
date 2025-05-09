@@ -15,7 +15,7 @@ import {
 } from "date-fns";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import TaskCard from "./TaskCard";
-import TaskDetailsModal from "../tasks/TaskDetailsModal";
+import TaskDetailsModal from "../tasks/TaskDetailsPanel";
 
 function flattenTasks(tasksObj) {
   const allTasks = [];
