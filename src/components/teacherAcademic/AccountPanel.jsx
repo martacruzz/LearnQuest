@@ -5,17 +5,15 @@ const AccountPanel = () => {
       <div className="bg-white p-6 rounded-xl shadow">
         <h2 className="text-xl font-bold mb-4">Profile</h2>
         <div className="flex items-center gap-6">
-          <div className="w-16 h-16 rounded-full bg-slate-700 text-white flex items-center justify-center text-2xl font-bold">
-            <img 
-              src="/src/assets/images/leonor.jpg"  // Caminho para a imagem do avatar
-              alt="Joana's avatar"
-              className="w-16 h-16 rounded-full object-cover border-2 border-slate-200"
-            />
-          </div>
+          <img 
+            src="/src/assets/images/joana-magalhaes.jpg"  // Caminho para a imagem do avatar
+            alt="Joana's avatar"
+            className="w-16 h-16 rounded-full object-cover border-2 border-slate-200"
+          />
           <div className="flex flex-col gap-1">
             <input
               type="text"
-              defaultValue="Leonor Ferreira"
+              defaultValue="Joana Magalhães"
               className="px-3 py-2 rounded bg-slate-100 text-sm w-60"
             />
             <a href="#" className="text-slate-600 text-sm hover:underline">
@@ -25,14 +23,14 @@ const AccountPanel = () => {
         </div>
       </div>
 
-      {/* Security */}
+      {/* Security - Restante do código mantido igual */}
       <div className="bg-white p-6 rounded-xl shadow">
         <h2 className="text-xl font-bold mb-4">Security</h2>
         <div className="flex flex-col gap-4">
           <div className="flex justify-between items-center border-b pb-2">
             <div>
               <p className="text-sm text-slate-600">Email</p>
-              <p className="text-sm">leonorferreira03@gmail.com</p>
+              <p className="text-sm">joanamagalhaes667@gmail.com</p>
             </div>
             <button className="px-3 py-1 text-sm rounded bg-slate-200 hover:bg-slate-300">
               Change email

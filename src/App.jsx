@@ -15,6 +15,7 @@ import PersonalClansDashboard from "./pages/personal/PersonalClanDashboard";
 import PersonalClanLeaderBoard from "./pages/personal/PersonalClanLeaderBoard";
 import PersonalClanMembers from "./pages/personal/PersonalClanMembers";
 import PersonalClansChat from "./pages/personal/PersonalClanChat";
+import PersonalSettings from "./pages/personal/PersonalSettings";
 
 // ----------- ACADEMIC PAGES - STUDENT -----------
 import StudentHome from "./pages/Academic/Student/StudentHome";
@@ -32,6 +33,7 @@ import TeacherClasses from "./pages/Academic/Teacher/TeacherClasses";
 import TeacherDisciplinePage from "./pages/Academic/Teacher/TeacherDisciplinePage";
 import TeacherCalendar from "./pages/Academic/Teacher/TeacherCalendar";
 import TeacherChat from "./pages/Academic/Teacher/TeacherChat";
+import TeacherSettings from "./pages/Academic/Teacher/TeacherSettings";
 
 function Placeholder({ text }) {
   return <h1 style={{ color: "white" }}>{text} Page</h1>;
@@ -49,7 +51,7 @@ function App() {
         <Route path="classes" element={<TeacherClasses />} />
         <Route path="calendar" element={<TeacherCalendar />} />
         <Route path="messages" element={<TeacherChat />} />
-        <Route path="settings" element={<Placeholder text="Settings" />} />
+        <Route path="settings" element={<TeacherSettings />} />
         <Route
           path="discipline/:disciplinaId"
           element={<TeacherDisciplinePage />}
@@ -77,6 +79,7 @@ function App() {
         <Route path="clans/leaderboard" element={<PersonalClanLeaderBoard />} />
         <Route path="clans/members" element={<PersonalClanMembers />} />
         <Route path="clans/chat" element={<PersonalClansChat />} />
+        <Route path="settings" element={<PersonalSettings />} />
       </Route>
     </Routes>
   );

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SettingsNav from "../../../components/studentAcademic/settings/SettingsNav";
-import AccountPanel from "../../../components/studentAcademic/settings/AccountPanel";
+import AccountPanel from "../../../components/teacherAcademic/AccountPanel";
 import PreferencesPanel from "../../../components/studentAcademic/settings/PreferencesPanel";
 import NotificationsPanel from "../../../components/studentAcademic/settings/NotificationsPanel";
 import SecurityPanel from "../../../components/studentAcademic/settings/SecurityPanel";
@@ -18,7 +18,7 @@ const panels = {
   Connections: <IntegrationsPanel />,
 };
 
-function StudentSettings() {
+function TeacherSettings() {
   const [activePanel, setActivePanel] = useState("Account");
 
   return (
@@ -35,4 +35,4 @@ function StudentSettings() {
   );
 }
 
-export default StudentSettings;
+export default TeacherSettings;
