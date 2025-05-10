@@ -3,11 +3,11 @@ import ClanNavBar from "./ClanNavbar";
 
 const ClanChat = () => {
   const [messages, setMessages] = useState([
-    { id: 1, sender: "Alec", text: "Welcome to the clan!" },
-    { id: 2, sender: "Bob", text: "Thanks! Glad to be here." },
-    { id: 3, sender: "Mark", text: "Has anyone completed their weekly tasks yet?" },
-    { id: 4, sender: "Alec", text: "Not yet... Had a busy week :(" },
-    { id: 5, sender: "Clark", text: "I did!" },
+    { id: 1, sender: "Rui Silva", text: "Does anyone know the answer to question 3 of pds?" },
+    { id: 2, sender: "Mariana Costa", text: "I think you have to use the observer pattern" },
+    { id: 3, sender: "Camila Sousa", text: "Yes I already did it and it was that" },
+    { id: 4, sender: "Rui Silva", text: "Ok I'll try it then, thanks :)" },
+    { id: 5, sender: "Mariana Costa", text: "You're welcome" },
   ]);
   const [newMessage, setNewMessage] = useState("");
 
@@ -32,7 +32,7 @@ const ClanChat = () => {
         <div className="flex flex-col bg-white rounded-2xl shadow-md overflow-hidden flex-1">
           {/* Header */}
           <div className="bg-gray-200 text-gray-800 px-6 py-4 text-xl font-semibold border-b border-gray-300">
-            Clan Chat
+            12ºB Chat
           </div>
 
           {/* Chat Messages */}

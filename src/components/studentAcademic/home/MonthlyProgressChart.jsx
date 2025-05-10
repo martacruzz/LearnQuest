@@ -10,12 +10,12 @@ import {
 
 const MonthlyProgressChart = () => {
   const data = [
-    { month: 'Jan', xp: 100 },
-    { month: 'Feb', xp: 200 },
-    { month: 'Mar', xp: 320 },
-    { month: 'Apr', xp: 460 },
-    { month: 'May', xp: 580 },
-    { month: 'Jun', xp: 710 },
+    { month: 'Jan', xp: 200 },
+    { month: 'Feb', xp: 532 },
+    { month: 'Mar', xp: 720 },
+    { month: 'Apr', xp: 978 },
+    { month: 'May', xp: 1167 },
+    { month: 'Jun', xp: 1514 },
   ];
 
   return (
@@ -38,7 +38,7 @@ const MonthlyProgressChart = () => {
           <Line
             type="monotone"
             dataKey="xp"
-            stroke="#0ea5e9" // cyan-500
+            stroke="red" // cyan-500
             strokeWidth={3}
             activeDot={{ r: 8 }}
           />

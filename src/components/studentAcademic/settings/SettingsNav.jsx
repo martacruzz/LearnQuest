@@ -1,11 +1,11 @@
 const sections = [
-  "Conta",
-  "Preferências",
-  "Notificações",
-  "Segurança",
-  "Acessibilidade",
-  "Idioma & Região",
-  "Conexões",
+  "Account",
+  "Preferences",
+  "Notifications",
+  "Security",
+  "Accessibility",
+  "Language & Region",
+  "Connections",
 ];
 
 function SettingsNav({ active, setActive }) {

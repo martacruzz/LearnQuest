@@ -2,14 +2,14 @@ import ClanDashboard from "../../../components/studentAcademic/clans/ClanDashboa
 
 
 const clan = {
-  name: "Golden Wolves",
-  level: 5,
-  avatarUrl: "/src/assets/images/clan_logo.jpg",
-  currentXp: 1200,
+  name: "Class 12ºB",
+  level: 9,
+  avatarUrl: "/src/assets/images/light_warriors.jpg",
+  currentXp: 1750,
   nextLevelXp: 2000,
-  memberCount: 23,
-  avgTasksPerWeek: 150,
-  completedTasksThisWeek: 75,
+  memberCount: 20,
+  avgTasksPerWeek: 143,
+  completedTasksThisWeek: 64,
 };
 
 

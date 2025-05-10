@@ -1,34 +1,82 @@
 import TaskCalendarView from "../../../components/studentAcademic/calendar/TasksCalendarView";
 import { v4 as uuidv4 } from "uuid";
 
-// just to test -> connect to actual backend tasks later
-const dummyTasks = {
+const taskData = {
   review: [
-    { id: uuidv4(), title: "review C lectures", date: "April 22, 2025", done: true },
-    { id: uuidv4(), title: "catch up on cd lectures - flashcards for lec 7 forward", date: "April 24, 2025", done: true },
+    { 
+      id: uuidv4(),
+      title: "Assignment 3 - Article Presentation",
+      dueDate: "2025-06-05",
+      status: "Completed",
+      xp: 300,
+      subject: "Human-Computer Interaction",
+      dueTime: "23:50",
+      dueLimit: "23:59",
+      instructions: "Present a scientific article from a top HCI conference in a 10-minute presentation.",
+      resources: ["Article_Presentation_Guidelines.pdf"],
+      mySubmission: "Presentation_Article.pptx",
+    },
+    { 
+      id: uuidv4(),
+      title: "Assignment 1 - Context and Requirement Analysis", 
+      dueDate: "2025-05-01",
+      status: "Completed",
+      xp: 250,
+      subject: "Human-Computer Interaction",
+      dueTime: "10:30",
+      dueLimit: "23:59",
+      instructions: "Prepare a 15-minute group presentation on the context and requirements of your project.",
+      resources: ["Assignment1_Guidelines.pdf"],
+      mySubmission: "Presentation_Context.pptx",
+    },
   ],
   ihc: [
-    { id: uuidv4(), title: "implement personal home", date: "April 23, 2025", done: true },
-    { id: uuidv4(), title: "implement personal tasks interface", date: "April 23, 2025", done: true },
-    { id: uuidv4(), title: "implement personal calendar", date: "April 23, 2025", done: true },
-    { id: uuidv4(), title: "implement personal clans interface", date: "April 23, 2025", done: true },
-    { id: uuidv4(), title: "implement clan chat", date: "April 23, 2025", done: true },
+    { 
+      id: uuidv4(),
+      title: "Final Project Report",
+      dueDate: "2025-06-15",
+      status: "Upcoming",
+      xp: 400,
+      subject: "Distributed Computing",
+      dueTime: "18:00",
+      dueLimit: "23:59",
+      instructions: "Submit the final report in PDF format along with any relevant files.",
+      resources: ["Final_Report_Template.pdf"],
+      mySubmission: "",
+    },
+    { 
+      id: uuidv4(),
+      title: "SQL Practice Exercises",
+      dueDate: "2025-05-05",
+      status: "Overdue",
+      xp: 200,
+      subject: "Databases",
+      dueTime: "20:00",
+      dueLimit: "23:59",
+      instructions: "Submit a .sql file with the solution for all provided queries.",
+      resources: ["SQL_Exercises.pdf"],
+      mySubmission: "",
+    },
   ],
   bd: [
-    { id: uuidv4(), title: "check out how to implement forms with flask + python", date: "", done: false },
-  ],
-  cd: [
-    { id: uuidv4(), title: "implement p2p network", date: "April 21, 2025", done: false },
-    { id: uuidv4(), title: "connect http server with p2p network", date: "April 21, 2025", done: false },
-    { id: uuidv4(), title: "finish http server endpoint implementation (abstract)", date: "April 21, 2025", done: false },
-  ],
-  labs: [
-    { id: uuidv4(), title: "finish C lab", date: "April 22, 2025", done: true },
-  ],
+    { 
+      id: uuidv4(),
+      title: "Lab10 Exercises",
+      dueDate: "2025-05-15",
+      status: "Upcoming",
+      xp: 150,
+      subject: "PDS",
+      dueTime: "12:00",
+      dueLimit: "23:59",
+      instructions: "Upload the solution of all lab10 exercises.",
+      resources: ["lab10_exercises.pdf"],
+      mySubmission: "",
+    },
+  ]
 };
 
 function StudentCalendar() {
-  return <TaskCalendarView tasks={dummyTasks} />;
+  return <TaskCalendarView tasks={taskData} />;
 }
 
-export default StudentCalendar
+export default StudentCalendar;
