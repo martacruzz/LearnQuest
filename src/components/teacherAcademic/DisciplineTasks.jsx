@@ -1,32 +1,11 @@
 import { useState } from "react";
 import { Plus, Trash2, Pencil, Eye, EyeOff } from "lucide-react";
 
-function DisciplineTasks() {
+function DisciplineTasks({ initialTasks = [] }) {
   const [showModal, setShowModal] = useState(false);
-  const [showViewModal, setShowViewModal] = useState(null); // id da tarefa a visualizar
+  const [showViewModal, setShowViewModal] = useState(null);
   const [editMode, setEditMode] = useState(false);
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      date: "2024-04-10",
-      name: "Exercícios",
-      description: "Resolver ficha 3",
-      submission: "Submeter no Teams",
-      hour: "23:59",
-      xp: 20,
-      visible: true,
-    },
-    {
-      id: 2,
-      date: "2024-05-27",
-      name: "Documento trincheiras",
-      description: "Apresentação final",
-      submission: "Via email",
-      hour: "23:59",
-      xp: 50,
-      visible: false,
-    },
-  ]);
+  const [tasks, setTasks] = useState(initialTasks);
 
   const [newTask, setNewTask] = useState({
     date: "",
@@ -46,13 +25,11 @@ function DisciplineTasks() {
     if (!newTask.name || !newTask.date || !newTask.hour) return;
 
     if (editMode !== false) {
-      // Edição
       const updated = tasks.map((task) =>
         task.id === editMode ? { ...task, ...newTask } : task
       );
       setTasks(updated);
     } else {
-      // Criação
       const taskToAdd = { ...newTask, id: Date.now() };
       setTasks([...tasks, taskToAdd]);
     }
@@ -89,7 +66,6 @@ function DisciplineTasks() {
 
   return (
     <div className="overflow-auto text-gray-800">
-      {/* Header */}
       <div className="flex justify-end items-center mb-6">
         <button
           onClick={() => {
@@ -111,7 +87,6 @@ function DisciplineTasks() {
         </button>
       </div>
 
-      {/* Lista de Tarefas */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
         {tasks.map((task) => (
           <div
@@ -184,7 +159,6 @@ function DisciplineTasks() {
                 placeholder="Submission Details"
                 className="w-full border rounded px-3 py-2"
               />
-
               <div className="flex gap-2">
                 <input
                   type="date"
@@ -201,7 +175,6 @@ function DisciplineTasks() {
                   className="w-1/2 border rounded px-2 py-1"
                 />
               </div>
-
               <div className="flex gap-4 items-center">
                 <label className="text-sm">XP</label>
                 <input
@@ -211,8 +184,6 @@ function DisciplineTasks() {
                   onChange={handleChange}
                   className="w-24 border rounded px-2 py-1"
                 />
-                <label className="ml-6 text-sm">Recursos</label>
-                <input type="file" className="text-sm" />
               </div>
             </div>
 

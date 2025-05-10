@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   Folder,
   FolderOpen,
@@ -8,27 +8,17 @@ import {
   Plus,
 } from "lucide-react";
 
-function DisciplineResources() {
-  const [resources, setResources] = useState([
-    {
-      id: 1,
-      type: "folder",
-      name: "Fichas_de_trabalho",
-      open: false,
-      contents: [
-        { id: 4, type: "pdf", name: "Exemplo.pdf" },
-        { id: 5, type: "word", name: "Notas.docx" },
-      ],
-    },
-    { id: 2, type: "pdf", name: "Aula1.pdf" },
-    { id: 3, type: "word", name: "Resumo.docx" },
-  ]);
-
-  const [draggedItem, setDraggedItem] = useState(null); // NOVO
+function DisciplineResources({ initialResources = [] }) {
+  const [resources, setResources] = useState(initialResources);
+  const [draggedItem, setDraggedItem] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showCreateFolder, setShowCreateFolder] = useState(false);
   const [folderName, setFolderName] = useState("");
   const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    setResources(initialResources);
+  }, [initialResources]);
 
   const renderIcon = (type, isOpen = false) => {
     if (type === "folder") {
@@ -60,7 +50,7 @@ function DisciplineResources() {
       id: Date.now(),
       type,
       name: file.name,
-      file, // NOVO
+      file,
     };
     setResources((prev) => [...prev, newFile]);
   };
@@ -83,32 +73,26 @@ function DisciplineResources() {
     e.preventDefault();
 
     if (draggedItem) {
-      // mover ficheiro ou pasta já existente
       setResources((prev) => {
         const filtered = prev.filter((r) => r.id !== draggedItem.id);
         return filtered.map((r) =>
           r.id === folderId
-            ? {
-                ...r,
-                contents: [...r.contents, draggedItem],
-              }
+            ? { ...r, contents: [...r.contents, draggedItem] }
             : r
         );
       });
       setDraggedItem(null);
     } else {
-      // drop de ficheiro do PC
       const file = e.dataTransfer.files[0];
       if (!file) return;
 
       const ext = file.name.split(".").pop().toLowerCase();
       const type = ext === "pdf" ? "pdf" : ext === "docx" ? "word" : "file";
-
       const newFile = {
         id: Date.now(),
         type,
         name: file.name,
-        file, // NOVO
+        file,
       };
 
       setResources((prev) =>
@@ -139,13 +123,13 @@ function DisciplineResources() {
           key={item.id}
           className="flex flex-col items-center w-40"
           draggable
-          onDragStart={() => setDraggedItem(item)} // NOVO
+          onDragStart={() => setDraggedItem(item)}
         >
           <div
             className="p-1 flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition"
             onClick={() => {
               if (item.type === "folder") toggleFolder(item.id);
-              else handleOpenFile(item); // NOVO
+              else handleOpenFile(item);
             }}
             onDrop={(e) => handleDrop(e, item.id)}
             onDragOver={handleDragOver}
@@ -164,7 +148,7 @@ function DisciplineResources() {
                   <div
                     key={subItem.id}
                     className="flex items-center gap-2 cursor-pointer"
-                    onClick={() => handleOpenFile(subItem)} // NOVO
+                    onClick={() => handleOpenFile(subItem)}
                   >
                     {renderIcon(subItem.type)}
                     <span className="text-sm break-words">{subItem.name}</span>
@@ -248,7 +232,6 @@ function DisciplineResources() {
         </div>
       )}
 
-      {/* Input invisível */}
       <input
         type="file"
         className="hidden"

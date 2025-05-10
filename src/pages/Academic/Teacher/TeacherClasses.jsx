@@ -4,7 +4,20 @@ import { Link } from "react-router-dom";
 
 function TeacherClasses() {
   const [turmas, setTurmas] = useState([
-    { curso: "Humanidades", ano: "12º", turma: "B", disciplina: "História A" },
+    {
+      id: "historia-a",
+      curso: "Humanidades",
+      ano: "12º",
+      turma: "B",
+      disciplina: "História A",
+    },
+    {
+      id: "matematica-a",
+      curso: "Ciências e Tecnologias",
+      ano: "11º",
+      turma: "A",
+      disciplina: "Matemática A",
+    },
   ]);
 
   const [showModal, setShowModal] = useState(false);
@@ -66,6 +79,14 @@ function TeacherClasses() {
       return;
 
     const novaTurma = {
+      id:
+        selectedSubject
+          .toLowerCase()
+          .replace(/\s+/g, "-")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "") +
+        "-" +
+        Date.now(),
       curso: selectedCourse,
       ano: selectedYear,
       turma: selectedClass,
@@ -103,7 +124,7 @@ function TeacherClasses() {
                   value={selectedCourse}
                   onChange={(e) => {
                     setSelectedCourse(e.target.value);
-                    setSelectedSubject(""); // Limpa disciplina ao mudar curso
+                    setSelectedSubject("");
                   }}
                 >
                   <option value="">...</option>
@@ -226,9 +247,7 @@ function TeacherClasses() {
           {turmasOrdenadas.map((t, index) => (
             <Link
               key={index}
-              to={`/academic/teacher/discipline/${encodeURIComponent(
-                t.disciplina
-              )}`}
+              to={`/academic/teacher/discipline/${t.id}`}
               className="w-65 h-40 bg-slate-700 rounded-3xl flex flex-col items-center justify-center hover:scale-105 transition no-underline text-white"
             >
               <GraduationCap className="w-12 h-12 mb-2" />
