@@ -3,10 +3,10 @@ import React from "react";
 const UserProfileBanner = () => {
   const user = {
     name: "Leonor Ferreira",
-    level: 7,
-    current_xp: 580,
-    xp_to_next_level: 800,
-    avatar: "/src/assets/images/leonor.jpg",
+    level: 9,
+    current_xp: 1514,
+    xp_to_next_level: 2000,
+    avatar: "/src/assets/images/avatar_example.jpg",
   };
 
   const xpPercent = (user.current_xp / user.xp_to_next_level) * 100;
@@ -26,6 +26,13 @@ const UserProfileBanner = () => {
               className="relative w-full h-full rounded-full border-4 border-gray-300 object-cover z-10"
             />
           </div>
+          {/* Edit Button */}
+          <button
+            className="mt-4 px-4 py-2 bg-slate-500 text-white text-sm rounded hover:bg-cyan-600"
+            onClick={() => {}}
+          >
+            Edit Avatar
+          </button>
         </div>
 
         {/* XP Circle */}
@@ -65,7 +72,6 @@ const UserProfileBanner = () => {
         </div>
       </div>
     </div>
-
   );
 };
 

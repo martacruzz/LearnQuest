@@ -1,27 +1,17 @@
-import React, { useState, useRef } from "react";
-import {
-  format,
-  startOfMonth,
-  endOfMonth,
-  startOfWeek,
-  endOfWeek,
-  addDays,
-  addMonths,
-  subMonths,
-  isSameMonth,
-  isSameDay,
-  isBefore,
-  isAfter,
-} from "date-fns";
+import React, { useState } from "react";
+import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, addMonths, subMonths, isSameMonth, isSameDay } from "date-fns";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import TaskCard from "./TaskCard";
-import TaskDetailsModal from "../tasks/TaskDetailsPanel";
 
 function flattenTasks(tasksObj) {
   const allTasks = [];
   for (const [projectName, taskList] of Object.entries(tasksObj)) {
     taskList.forEach((task) => {
-      allTasks.push({ ...task, project: projectName });
+      allTasks.push({ 
+        ...task,
+        project: projectName,
+        date: task.dueDate
+      });
     });
   }
   return allTasks;
@@ -31,9 +21,6 @@ function TaskCalendarView({ tasks = {} }) {
   const [selectedTask, setSelectedTask] = useState(null);
   const [taskList, setTaskList] = useState(flattenTasks(tasks));
   const [currentMonth, setCurrentMonth] = useState(new Date());
-
-  const isDraggingToPrevMonth = useRef(false);
-  const isDraggingToNextMonth = useRef(false);
 
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(monthStart);
@@ -53,54 +40,25 @@ function TaskCalendarView({ tasks = {} }) {
 
     setTaskList((prevTasks) =>
       prevTasks.map((task) =>
-        task.id === draggableId ? { ...task, date: destinationDate } : task
+        task.id === draggableId ? { 
+          ...task, 
+          date: destinationDate,
+          dueDate: destinationDate
+        } : task
       )
     );
-
-    // Reset dragging flags
-    isDraggingToPrevMonth.current = false;
-    isDraggingToNextMonth.current = false;
   };
 
-  const onDragUpdate = (update) => {
-    const { destination } = update;
-    if (!destination) return;
-
-    const destDate = new Date(destination.droppableId);
-
-    if (isBefore(destDate, startOfWeek(monthStart))) {
-      if (!isDraggingToPrevMonth.current) {
-        setCurrentMonth((prev) => subMonths(prev, 1));
-        isDraggingToPrevMonth.current = true;
-        isDraggingToNextMonth.current = false;
-      }
-    } else if (isAfter(destDate, endOfWeek(monthEnd))) {
-      if (!isDraggingToNextMonth.current) {
-        setCurrentMonth((prev) => addMonths(prev, 1));
-        isDraggingToNextMonth.current = true;
-        isDraggingToPrevMonth.current = false;
-      }
-    }
-  };
-
-  const prevMonth = () => {
-    setCurrentMonth((prev) => subMonths(prev, 1));
-  };
-
-  const nextMonth = () => {
-    setCurrentMonth((prev) => addMonths(prev, 1));
-  };
-
-  const resetToToday = () => {
-    setCurrentMonth(new Date());
-  };
+  const prevMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
+  const nextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
+  const resetToToday = () => setCurrentMonth(new Date());
 
   while (day <= endDate) {
     for (let i = 0; i < 7; i++) {
       const formattedDate = format(day, dateFormat);
       const isoDate = day.toISOString();
-      const dayTasks = taskList.filter(
-        (task) => task.date && isSameDay(new Date(task.date), day)
+      const dayTasks = taskList.filter((task) => 
+        task.date && isSameDay(new Date(task.date), day)
       );
 
       days.push(
@@ -109,10 +67,11 @@ function TaskCalendarView({ tasks = {} }) {
             <div
               ref={provided.innerRef}
               {...provided.droppableProps}
-              className={`min-h-28 border border-gray-200 p-2 rounded-md flex flex-col gap-1 ${isSameMonth(day, monthStart)
-                ? "bg-gray-100"
-                : "bg-gray-100 text-slate-500"
-                } ${snapshot.isDraggingOver ? "bg-gray-300" : ""}`}
+              className={`min-h-28 border border-gray-200 p-2 rounded-md flex flex-col gap-1 ${
+                isSameMonth(day, monthStart) 
+                  ? "bg-gray-100" 
+                  : "bg-gray-100 text-slate-500"
+              } ${snapshot.isDraggingOver ? "bg-gray-300" : ""}`}
             >
               <div className="text-xs text-slate-400">{formattedDate}</div>
 
@@ -130,7 +89,7 @@ function TaskCalendarView({ tasks = {} }) {
                     >
                       <TaskCard
                         title={task.title}
-                        project={task.project}
+                        subject={task.subject}
                         priority={task.priority || "Chill"}
                         onClick={() => setSelectedTask(task)}
                       />
@@ -158,7 +117,7 @@ function TaskCalendarView({ tasks = {} }) {
 
   return (
     <div className="ml-16 p-10 relative">
-      <div className="flex items-center justify-between mb-6 border-b border-slate-700">
+      <div className="flex items-center justify-between mb-6 border-b border-slate-200">
         <h2 className="text-xl font-semibold text-slate-500">
           {format(currentMonth, "MMMM yyyy")}
         </h2>
@@ -193,15 +152,85 @@ function TaskCalendarView({ tasks = {} }) {
         ))}
       </div>
 
-      <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
+      <DragDropContext onDragEnd={onDragEnd}>
         <div className="flex flex-col gap-2">{rows}</div>
       </DragDropContext>
 
+      {/* Popup com overlay ajustado */}
       {selectedTask && (
-        <TaskDetailsModal
-          task={selectedTask}
-          onClose={() => setSelectedTask(null)}
-        />
+        <div className="fixed inset-0 z-50">
+          <div 
+            className="inset-0 bg-black bg-opacity-20"
+            onClick={() => setSelectedTask(null)}
+          />
+          
+          <div className="relative flex items-center justify-center h-full">
+            <div className="bg-white border border-slate-200 rounded-lg shadow-2xl p-6 w-full max-w-2xl mx-4">
+              <div className="flex justify-between items-start mb-4">
+                <h3 className="text-xl font-bold text-slate-800">
+                  {selectedTask.title}
+                </h3>
+                <button
+                  onClick={() => setSelectedTask(null)}
+                  className="text-slate-500 hover:text-slate-700 text-2xl leading-none"
+                >
+                  &times;
+                </button>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <p className="text-slate-500 font-medium">Subject</p>
+                  <p className="text-slate-800">{selectedTask.subject}</p>
+                </div>
+                
+                <div>
+                  <p className="text-slate-500 font-medium">Due Date</p>
+                  <p className="text-slate-800">
+                    {selectedTask.dueDate} • {selectedTask.dueTime}
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-slate-500 font-medium">Status</p>
+                  <p className={`font-medium ${
+                    selectedTask.status === 'completed' 
+                      ? 'text-green-600' 
+                      : selectedTask.status === 'overdue' 
+                        ? 'text-red-600' 
+                        : 'text-blue-600'
+                  }`}>
+                    {selectedTask.status}
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-slate-500 font-medium">XP</p>
+                  <p className="text-emerald-600 font-medium">{selectedTask.xp}</p>
+                </div>
+              </div>
+
+              <div className="mt-4">
+                <p className="text-slate-500 font-medium">Instructions</p>
+                <p className="text-slate-800 mt-1">{selectedTask.instructions}</p>
+              </div>
+
+              <div className="mt-4">
+                <p className="text-slate-500 font-medium">Resources</p>
+                <div className="flex flex-wrap gap-2 mt-1">
+                  {selectedTask.resources.map((resource, index) => (
+                    <span
+                      key={index}
+                      className="px-2 py-1 bg-slate-100 rounded-md text-slate-700 text-sm"
+                    >
+                      {resource}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

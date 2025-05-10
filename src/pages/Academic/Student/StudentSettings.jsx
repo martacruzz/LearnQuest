@@ -9,17 +9,17 @@ import LanguagePanel from "../../../components/studentAcademic/settings/Language
 import IntegrationsPanel from "../../../components/studentAcademic/settings/IntegrationsPanel";
 
 const panels = {
-  Conta: <AccountPanel />,
-  Preferências: <PreferencesPanel />,
-  Notificações: <NotificationsPanel />,
-  Segurança: <SecurityPanel />,
-  Acessibilidade: <AccessibilityPanel />,
-  "Idioma & Região": <LanguagePanel />,
-  Conexões: <IntegrationsPanel />,
+  Account: <AccountPanel />,
+  Preferences: <PreferencesPanel />,
+  Notifications: <NotificationsPanel />,
+  Security: <SecurityPanel />,
+  Accessibility: <AccessibilityPanel />,
+  "Language & Region": <LanguagePanel />,
+  Connections: <IntegrationsPanel />,
 };
 
 function StudentSettings() {
-  const [activePanel, setActivePanel] = useState("Conta");
+  const [activePanel, setActivePanel] = useState("Account");
 
   return (
     <div className="pl-16 flex h-screen overflow-hidden">
@@ -36,4 +36,3 @@ function StudentSettings() {
 }
 
 export default StudentSettings;
-
