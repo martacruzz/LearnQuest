@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import DisciplineChat from "../../../components/teacherAcademic/DisciplineChat";
 import DisciplineTasks from "../../../components/teacherAcademic/DisciplineTasks";
 import DisciplineResources from "../../../components/teacherAcademic/DisciplineResources";
+import DisciplineSubmissions from "../../../components/teacherAcademic/DisciplineSubmissions";
 
 // Content per subject (fixed or initial)
 const disciplinaData = {
@@ -141,46 +142,26 @@ const TeacherDisciplinePage = () => {
 
       {/* Tabs */}
       <div className="flex gap-4 mb-6">
-        <button
-          onClick={() => setTab("chat")}
-          className={`px-4 py-2 rounded-full ${
-            tab === "chat"
-              ? "bg-slate-800 text-white"
-              : "bg-white border text-gray-800"
-          }`}
-        >
-          Chat
-        </button>
-        <button
-          onClick={() => setTab("tasks")}
-          className={`px-4 py-2 rounded-full ${
-            tab === "tasks"
-              ? "bg-slate-800 text-white"
-              : "bg-white border text-gray-800"
-          }`}
-        >
-          Tasks
-        </button>
-        <button
-          onClick={() => setTab("resources")}
-          className={`px-4 py-2 rounded-full ${
-            tab === "resources"
-              ? "bg-slate-800 text-white"
-              : "bg-white border text-gray-800"
-          }`}
-        >
-          Resources
-        </button>
+        {["chat", "tasks", "resources", "submissions"].map((key) => (
+          <button
+            key={key}
+            onClick={() => setTab(key)}
+            className={`px-4 py-2 rounded-full ${
+              tab === key
+                ? "bg-slate-800 text-white"
+                : "bg-white border text-gray-800"
+            }`}
+          >
+            {key.charAt(0).toUpperCase() + key.slice(1)}
+          </button>
+        ))}
       </div>
 
       {/* Tab content */}
       {tab === "chat" && <DisciplineChat initialChat={conteudo?.chat || []} />}
-      {tab === "tasks" && (
-        <DisciplineTasks initialTasks={conteudo?.tasks || []} />
-      )}
-      {tab === "resources" && (
-        <DisciplineResources initialResources={conteudo?.resources || []} />
-      )}
+      {tab === "tasks" && <DisciplineTasks initialTasks={conteudo?.tasks || []} />}
+      {tab === "resources" && <DisciplineResources initialResources={conteudo?.resources || []} />}
+      {tab === "submissions" && <DisciplineSubmissions />}
     </div>
   );
 };
