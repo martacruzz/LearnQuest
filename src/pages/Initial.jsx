@@ -6,7 +6,11 @@ function Initial() {
 
   const handleClick = (role) => {
     localStorage.setItem("userRole", role);
-    navigate("/personal");
+    if (role === "student") {
+      navigate("/Personal/Student");
+    }else if (role === "teacher") {
+      navigate("/Personal/Teacher");
+    } 
   };
 
   return (

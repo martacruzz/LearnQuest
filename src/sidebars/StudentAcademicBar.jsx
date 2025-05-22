@@ -21,7 +21,7 @@ function Sidebar() {
 
           <SidebarItem
             icon={<ClipboardList className="w-8 h-8" />}
-            label="To-do"
+            label="Tasks"
             to="/academic/student/tasks"
           />
           <SidebarItem

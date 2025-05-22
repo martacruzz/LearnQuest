@@ -9,7 +9,6 @@ const sampleTasks = [
     title: "Portuguese Presention ",
     subject: "Portuguese",
     dueDate: "2025-05-28",
-    dueTime: "23:50",
     dueLimit: "23:59",
     submissionTime: "09:50",
     status: "completed",
@@ -23,7 +22,6 @@ const sampleTasks = [
     title: "History Paper",
     subject: "History",
     dueDate: "2025-05-01",
-    dueTime: "10:30",
     dueLimit: "23:59",
     submissionTime: "10:46",
     status: "completed",
@@ -37,7 +35,6 @@ const sampleTasks = [
     title: "Final Project Report",
     subject: "Philosophy",
     dueDate: "2025-06-05",
-    dueTime: "18:00",
     dueLimit: "23:59",
     submissionTime: "",
     status: "upcoming",
@@ -51,7 +48,6 @@ const sampleTasks = [
     title: "Lab Report",
     subject: "Physics and Chemistry",
     dueDate: "2025-05-05",
-    dueTime: "20:00",
     dueLimit: "23:59",
     submissionTime: "",
     status: "overdue",
@@ -65,7 +61,6 @@ const sampleTasks = [
     title: "Math Exercises",
     subject: "Math A",
     dueDate: "2025-05-16",
-    dueTime: "12:00",
     dueLimit: "23:59",
     submissionTime: "",
     status: "upcoming",
@@ -128,12 +123,6 @@ export default function StudentTasks() {
       ) : (
         <>
           <TaskListByDate tasks={filteredTasks} onOpenDetails={setSelectedTask} />
-
-          {activeTab === "Completed" && filteredTasks.length > 0 && (
-            <p className="text-sm text-slate-500 mt-6 italic">
-              To view older tasks, visit a specific course team.
-            </p>
-          )}
         </>
       )}
     </div>

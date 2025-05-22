@@ -9,7 +9,7 @@ import {
 } from "recharts";
 
 import JoanaImage from "../../../assets/images/joana-magalhaes.jpg";
-import PersonalMiniLeaderboard from "../../../components/personal/home/PersonalMiniLeaderBoard";
+import TeacherMiniLeaderboard from "../../../components/teacherAcademic/TeacherMiniLeaderBoard";
 
 const turmaXPData = {
   "10ºA": [
@@ -103,7 +103,7 @@ function TeacherHome() {
       {/* TAREFAS STATS */}
       <div className="flex flex-col gap-6">
         <h2 className="text-xl font-semibold p-3 ml-15 flex items-center gap-2">
-          📋 Tarefas Criadas
+          📋 Created Tasks
         </h2>
 
         <div className="grid grid-rows-2 grid-cols-2 gap-10 place-items-center">
@@ -133,7 +133,7 @@ function TeacherHome() {
 
       {/* LEADERBOARD */}
       <div className="self-start">
-        <PersonalMiniLeaderboard />
+        <TeacherMiniLeaderboard />
       </div>
     </div>
   );

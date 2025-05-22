@@ -18,7 +18,7 @@ function PersonalSwitcher() {
     const currentPath = window.location.pathname;
     if (currentPath.startsWith("/academic")) {
       setActive("Academic");
-    } else {
+    } else if (currentPath.startsWith("/personal")) {
       setActive("Personal");
     }
   }, []);
@@ -34,11 +34,15 @@ function PersonalSwitcher() {
       } else {
         navigate("/academic/teacher");
       }
-    } else {
-      navigate("/personal");
-    }
+    } else if (next === "Personal") {
+      if (role === "student") {
+        navigate("/personal/student");
+      } else {
+        navigate("/personal/teacher");
+      }
+    } 
   };
-
+  
   return (
     <div
       className="relative w-14 h-14 left-0.75"

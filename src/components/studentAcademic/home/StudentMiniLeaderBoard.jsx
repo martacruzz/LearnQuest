@@ -39,7 +39,7 @@ const PersonalMiniLeaderboard = () => {
   };
 
   return (
-    <div className="bg-white p-10 rounded-xl text-gray-800 w-full mt-6 max-h-100 overflow-y-auto">
+    <div className="bg-white p-10 rounded-xl text-gray-800 w-full mt-6 max-h-130 overflow-y-auto">
       <h3 className="text-3xl lg:text-4xl font-bold font-bold mb-4">🏆 Leaderboard - 12ºB 🏆</h3>
       <ul className="divide-y divide-gray-200">
         {users.map((user, index) => {

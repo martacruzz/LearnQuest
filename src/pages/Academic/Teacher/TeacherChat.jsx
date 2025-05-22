@@ -6,8 +6,8 @@ const mockChats = [
     id: "1",
     name: "João Oliveira",
     messages: [
-      { from: "teacher", text: "Olá João, tudo bem?", timestamp: "10:30" },
-      { from: "student", text: "Olá stor! Sim e consigo?", timestamp: "10:32" },
+      { from: "teacher", text: "Hi João, everything ok with you?", timestamp: "10:30" },
+      { from: "student", text: "Hi teacher! Yes it is, and with you?", timestamp: "10:32" },
     ],
   },
   {
@@ -16,10 +16,10 @@ const mockChats = [
     messages: [
       {
         from: "teacher",
-        text: "Já entregaste o relatório?",
+        text: "Hi Leonor, have you submitted the report??",
         timestamp: "09:00",
       },
-      { from: "student", text: "Ainda estou a acabar!", timestamp: "09:15" },
+      { from: "student", text: "Sorry teacher, i'm still finishing it!", timestamp: "09:15" },
     ],
   },
 ];
@@ -48,7 +48,7 @@ function TeacherChat() {
   };
 
   return (
-    <div className="flex p-0 ml-15 w-290s h-137 right-8">
+    <div className="flex p-0 ml-15 w-290s h-175 right-8">
       {/* Sidebar */}
       <div className="w-60 bg-slate-100 p-4 border-r border-slate-300 flex flex-col">
         <input

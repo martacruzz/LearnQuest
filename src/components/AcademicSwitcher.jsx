@@ -34,9 +34,13 @@ function AcademicSwitcher() {
       } else {
         navigate("/academic/teacher");
       }
-    } else {
-      navigate("/personal");
-    }
+    } else if (next === "Personal") {
+      if (role === "student") {
+        navigate("/personal/student");
+      } else {
+        navigate("/personal/teacher");
+      }
+    } 
   };
 
   return (

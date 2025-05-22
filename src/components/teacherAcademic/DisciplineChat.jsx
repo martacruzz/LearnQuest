@@ -17,13 +17,26 @@ function DisciplineChat({ initialChat = [] }) {
   };
 
   return (
-    <div className="flex flex-col justify-between h-[420px]">
+    <div className="flex flex-col justify-between h-[550px]">
       {/* Mensagens */}
-      <div className="flex-1 overflow-auto space-y-3">
+      <div className="flex-1 overflow-auto space-y-3 p-4">
         {mensagens.map((m, index) => (
-          <div key={index} className="bg-gray-300 p-4 rounded-lg max-w-lg">
-            <p className="font-semibold">{m.autor}</p>
-            <p>{m.texto}</p>
+          <div
+            key={index}
+            className={`flex ${
+              m.autor === "Professor" ? "justify-end" : "justify-start"
+            }`}
+          >
+            <div
+              className={`p-4 rounded-lg max-w-lg break-words ${
+                m.autor === "Professor"
+                  ? "bg-slate-600 text-white"
+                  : "bg-gray-300 text-gray-800"
+              }`}
+            >
+              <p className="font-semibold mb-1">{m.autor}</p>
+              <p>{m.texto}</p>
+            </div>
           </div>
         ))}
       </div>
@@ -39,9 +52,9 @@ function DisciplineChat({ initialChat = [] }) {
         />
         <button
           onClick={handleEnviar}
-          className="bg-slate-800 text-white px-4 py-2 rounded"
+          className="bg-slate-700 text-white px-4 py-2 rounded"
         >
-          Enviar
+          Send
         </button>
       </div>
     </div>

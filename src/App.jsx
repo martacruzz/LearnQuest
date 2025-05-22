@@ -4,18 +4,29 @@ import Initial from "./pages/Initial";
 
 // ----------- LAYOUTS -----------
 import TeacherLayout from "./layouts/TeacherLayout";
-import PersonalLayout from "./layouts/PersonalLayout";
+import StudentPersonalLayout from "./layouts/StudentPersonalLayout";
+import TeacherPersonalLayout from "./layouts/TeacherPersonalLayout";
 import StudentLayout from "./layouts/StudentLayout";
 
-// ----------- PERSONAL PAGES -----------
-import PersonalHome from "./pages/personal/PersonalHome";
-import PersonalTasks from "./pages/personal/PersonalTasks";
-import PersonalCalendar from "./pages/personal/PersonalCalendar";
-import PersonalClansDashboard from "./pages/personal/PersonalClanDashboard";
-import PersonalClanLeaderBoard from "./pages/personal/PersonalClanLeaderBoard";
-import PersonalClanMembers from "./pages/personal/PersonalClanMembers";
-import PersonalClansChat from "./pages/personal/PersonalClanChat";
-import PersonalSettings from "./pages/personal/PersonalSettings";
+// ----------- PERSONAL-Student PAGES -----------
+import StudentPersonalHome from "./pages/Personal/Student/PersonalHome";
+import StudentPersonalTasks from "./pages/Personal/Student/PersonalTasks";
+import StudentPersonalCalendar from "./pages/Personal/Student/PersonalCalendar";
+import StudentPersonalClansDashboard from "./pages/Personal/Student/PersonalClanDashboard";
+import StudentPersonalClanLeaderBoard from "./pages/Personal/Student/PersonalClanLeaderBoard";
+import StudentPersonalClanMembers from "./pages/Personal/Student/PersonalClanMembers";
+import StudentPersonalClansChat from "./pages/Personal/Student/PersonalClanChat";
+import StudentPersonalSettings from "./pages/Personal/Student/PersonalSettings";
+
+// ----------- PERSONAL-Teacher PAGES -----------
+import TeacherPersonalHome from "./pages/Personal/Teacher/PersonalHome";
+import TeacherPersonalTasks from "./pages/Personal/Teacher/PersonalTasks";
+import TeacherPersonalCalendar from "./pages/Personal/Teacher/PersonalCalendar";
+import TeacherPersonalClansDashboard from "./pages/Personal/Teacher/PersonalClanDashboard";
+import TeacherPersonalClanLeaderBoard from "./pages/Personal/Teacher/PersonalClanLeaderBoard";
+import TeacherPersonalClanMembers from "./pages/Personal/Teacher/PersonalClanMembers";
+import TeacherPersonalClansChat from "./pages/Personal/Teacher/PersonalClanChat";
+import TeacherPersonalSettings from "./pages/Personal/Teacher/PersonalSettings";
 
 // ----------- ACADEMIC PAGES - STUDENT -----------
 import StudentHome from "./pages/Academic/Student/StudentHome";
@@ -45,7 +56,7 @@ function App() {
       {/* Página inicial com seleção de tipo de utilizador */}
       <Route path="/" element={<Initial />} />
 
-      {/* LAYOUT PROFESSOR */}
+      {/* LAYOUT TEACHER */}
       <Route path="/academic/teacher" element={<TeacherLayout />}>
         <Route index element={<TeacherHome />} />
         <Route path="classes" element={<TeacherClasses />} />
@@ -70,18 +81,31 @@ function App() {
         <Route path="settings" element={<StudentSettings />} />
       </Route>
 
-      {/* LAYOUT PESSOAL */}
-      <Route path="/personal" element={<PersonalLayout />}>
-        <Route index element={<PersonalHome />} />
-        <Route path="tasks" element={<PersonalTasks />} />
-        <Route path="calendar" element={<PersonalCalendar />} />
-        <Route path="clans" element={<PersonalClansDashboard />} />
-        <Route path="clans/leaderboard" element={<PersonalClanLeaderBoard />} />
-        <Route path="clans/members" element={<PersonalClanMembers />} />
-        <Route path="clans/chat" element={<PersonalClansChat />} />
-        <Route path="settings" element={<PersonalSettings />} />
+      {/* LAYOUT PESSOAL-STUDENT */}
+      <Route path="/personal/student" element={<StudentPersonalLayout />}>
+        <Route index element={<StudentPersonalHome />} />
+        <Route path="tasks" element={<StudentPersonalTasks />} />
+        <Route path="calendar" element={<StudentPersonalCalendar />} />
+        <Route path="clans" element={<StudentPersonalClansDashboard />} />
+        <Route path="clans/leaderboard" element={<StudentPersonalClanLeaderBoard />} />
+        <Route path="clans/members" element={<StudentPersonalClanMembers />} />
+        <Route path="clans/chat" element={<StudentPersonalClansChat />} />
+        <Route path="settings" element={<StudentPersonalSettings />} />
+      </Route>
+
+      {/* LAYOUT PESSOAL-TEACHER */}
+      <Route path="/personal/teacher" element={<TeacherPersonalLayout />}>
+        <Route index element={<TeacherPersonalHome />} />
+        <Route path="tasks" element={<TeacherPersonalTasks />} />
+        <Route path="calendar" element={<TeacherPersonalCalendar />} />
+        <Route path="clans" element={<TeacherPersonalClansDashboard />} />
+        <Route path="clans/leaderboard" element={<TeacherPersonalClanLeaderBoard />} />
+        <Route path="clans/members" element={<TeacherPersonalClanMembers />} />
+        <Route path="clans/chat" element={<TeacherPersonalClansChat />} />
+        <Route path="settings" element={<TeacherPersonalSettings />} />
       </Route>
     </Routes>
+
   );
 }
 

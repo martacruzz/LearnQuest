@@ -1,34 +1,34 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import DisciplineChat from "../../../components/teacherAcademic/DisciplineChat";
 import DisciplineTasks from "../../../components/teacherAcademic/DisciplineTasks";
 import DisciplineResources from "../../../components/teacherAcademic/DisciplineResources";
 
-// Conteúdo por disciplina (fixo ou inicial)
+// Content per subject (fixed or initial)
 const disciplinaData = {
   "historia-a": {
     disciplina: "História A",
-    ano: "12º",
+    ano: "12th",
     turma: "B",
     chat: [
       {
         autor: "Beatriz",
         texto:
-          "Olá professora, tenho uma dúvida em relação à matéria da Segunda Guerra Mundial!",
+          "Hello teacher, I have a question about the topic of World War II!",
       },
       {
         autor: "João",
         texto:
-          "Eu também professora. Podia explicar a razão de terem criado e usado as trincheiras?",
+          "Me too, teacher. Could you explain the reason why trenches were created and used?",
       },
     ],
     tasks: [
       {
         id: 1,
         date: "2024-04-10",
-        name: "Exercícios",
-        description: "Resolver ficha 3",
-        submission: "Submeter no Teams",
+        name: "Exercises",
+        description: "Complete worksheet 3",
+        submission: "Submit on Teams",
         hour: "23:59",
         xp: 20,
         visible: true,
@@ -36,8 +36,8 @@ const disciplinaData = {
       {
         id: 2,
         date: "2024-05-27",
-        name: "Documento trincheiras",
-        description: "Apresentação final",
+        name: "Trench Document",
+        description: "Final presentation",
         submission: "Via email",
         hour: "23:59",
         xp: 50,
@@ -48,35 +48,35 @@ const disciplinaData = {
       {
         id: 1,
         type: "folder",
-        name: "Fichas_de_trabalho",
+        name: "Worksheets",
         open: false,
         contents: [
-          { id: 4, type: "pdf", name: "Exemplo.pdf" },
-          { id: 5, type: "word", name: "Notas.docx" },
+          { id: 4, type: "pdf", name: "Example.pdf" },
+          { id: 5, type: "word", name: "Notes.docx" },
         ],
       },
-      { id: 2, type: "pdf", name: "Aula1.pdf" },
-      { id: 3, type: "word", name: "Resumo.docx" },
+      { id: 2, type: "pdf", name: "Class1.pdf" },
+      { id: 3, type: "word", name: "Summary.docx" },
     ],
   },
   "matematica-a": {
     disciplina: "Matemática A",
-    ano: "11º",
+    ano: "11th",
     turma: "A",
     chat: [
       {
         autor: "André",
         texto:
-          "Stor, na questão 3 da ficha de derivadas, como se faz a alínea c)?",
+          "Teacher, in question 3 of the derivatives worksheet, how do you solve item c)?",
       },
-      { autor: "Catarina", texto: "Vamos ter aula de revisão antes do teste?" },
+      { autor: "Catarina", texto: "Will we have a review class before the test?" },
     ],
     tasks: [
       {
         id: 1,
         date: "2024-05-15",
-        name: "Ficha de Derivadas",
-        description: "Resolução completa da Ficha 5",
+        name: "Derivatives Worksheet",
+        description: "Complete solution of Worksheet 5",
         submission: "",
         hour: "22:00",
         xp: 25,
@@ -85,8 +85,8 @@ const disciplinaData = {
       {
         id: 2,
         date: "2024-05-20",
-        name: "Funções - Extra",
-        description: "Explorar funções quadráticas com Geogebra",
+        name: "Functions - Extra",
+        description: "Explore quadratic functions using Geogebra",
         submission: "",
         hour: "18:00",
         xp: 15,
@@ -97,14 +97,14 @@ const disciplinaData = {
       {
         id: 1,
         type: "folder",
-        name: "Testes Resolvidos",
+        name: "Solved Tests",
         open: false,
         contents: [],
       },
       {
         id: 2,
         type: "folder",
-        name: "Formulários",
+        name: "Formulas",
         open: false,
         contents: [],
       },
@@ -114,6 +114,7 @@ const disciplinaData = {
 
 const TeacherDisciplinePage = () => {
   const { disciplinaId } = useParams();
+  const navigate = useNavigate();
   const [tab, setTab] = useState("chat");
 
   const normalizado = disciplinaId.toLowerCase().replace(/\s+/g, "-");
@@ -127,7 +128,15 @@ const TeacherDisciplinePage = () => {
 
   return (
     <div className="p-0 ml-15 text-gray-800 mh-screen overflow-auto">
-      <h1 className="text-3xl font-bold text-slate-800 mb-1">{nome}</h1>
+      <div className="flex items-center gap-4 mb-1">
+        <button
+          onClick={() => navigate("/academic/teacher/classes")}
+          className="text-slate-800 text-2xl hover:underline"
+        >
+          ←
+        </button>
+        <h1 className="text-3xl font-bold text-slate-800">{nome}</h1>
+      </div>
       <div className="h-px bg-slate-400 w-full mb-4"></div>
 
       {/* Tabs */}
@@ -164,7 +173,7 @@ const TeacherDisciplinePage = () => {
         </button>
       </div>
 
-      {/* Conteúdo da aba */}
+      {/* Tab content */}
       {tab === "chat" && <DisciplineChat initialChat={conteudo?.chat || []} />}
       {tab === "tasks" && (
         <DisciplineTasks initialTasks={conteudo?.tasks || []} />

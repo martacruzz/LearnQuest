@@ -1,8 +1,9 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const UserProfileBanner = () => {
   const user = {
-    name: "Leonor Ferreira",
+    name: "Leonor Ferreira - 12ºB",
     level: 9,
     current_xp: 1514,
     xp_to_next_level: 2000,
@@ -10,38 +11,47 @@ const UserProfileBanner = () => {
   };
 
   const xpPercent = (user.current_xp / user.xp_to_next_level) * 100;
+  const circumference = 2 * Math.PI * 40;
+  const offset = circumference - (xpPercent / 100) * circumference;
 
   return (
-    <div className="bg-white p-10 lg:p-12 rounded-2xl flex flex-col md:flex-row items-center gap-10 text-gray-900 w-full max-w-screen-lg">
+    <div className="bg-white p-10 lg:p-12 rounded-2xl flex flex-col items-center text-gray-900 w-full max-w-screen-lg">
+      {/* Nome no topo ocupa toda a largura */}
+      <h2 className="text-3xl lg:text-4xl font-bold text-left w-full mb-10 truncate">
+        {user.name}
+      </h2>
 
-      {/* Avatar and XP Circle Side by Side */}
-      <div className="flex flex-col md:flex-row items-center md:items-center gap-10">
-        {/* Avatar and Name */}
-        <div className="flex flex-col items-center md:items-start gap-4">
-          <h2 className="text-3xl lg:text-4xl font-bold">{user.name}</h2>
+      {/* Conteúdo inferior: Avatar + XP lado a lado */}
+      <div className="flex flex-col md:flex-row items-center justify-center gap-16 w-full">
+        {/* Avatar e Botão */}
+        <div className="flex flex-col items-center gap-4">
           <div className="relative w-48 h-48 lg:w-56 lg:h-56">
             <img
               src={user.avatar}
               alt={user.name}
-              className="relative w-full h-full rounded-full border-4 border-gray-300 object-cover z-10"
+              className="w-full h-full rounded-full border-4 border-gray-300 object-cover z-10"
             />
           </div>
-          {/* Edit Button */}
           <button
-            className="mt-4 px-4 py-2 bg-slate-500 text-white text-sm rounded hover:bg-cyan-600"
+            className="px-4 py-2 bg-slate-500 text-white text-sm rounded hover:bg-cyan-600"
             onClick={() => {}}
           >
             Edit Avatar
           </button>
         </div>
 
-        {/* XP Circle */}
+        {/* Círculo de XP e nível */}
         <div className="flex flex-col items-center">
           <div className="text-lg lg:text-xl font-semibold text-gray-800 mb-2">
             <p>Level: {user.level}</p>
           </div>
           <div className="relative w-44 h-44 lg:w-52 lg:h-52">
-            <svg className="transform -rotate-90" width="100%" height="100%" viewBox="0 0 100 100">
+            <svg
+              className="transform -rotate-90"
+              width="100%"
+              height="100%"
+              viewBox="0 0 100 100"
+            >
               <circle
                 cx="50"
                 cy="50"
@@ -50,17 +60,23 @@ const UserProfileBanner = () => {
                 strokeWidth="8.5"
                 fill="none"
               />
-              <circle
+              <motion.circle
                 cx="50"
                 cy="50"
                 r="40"
                 stroke="#10b981"
                 strokeWidth="8.5"
                 fill="none"
-                strokeDasharray="283"
-                strokeDashoffset={283 - (283 * xpPercent) / 100}
+                strokeDasharray={circumference}
+                strokeDashoffset={circumference}
                 strokeLinecap="round"
-                className="transition-all duration-500"
+                initial={{ strokeDashoffset: circumference }}
+                animate={{ strokeDashoffset: offset }}
+                transition={{
+                  duration: 1.5,
+                  ease: "easeOut",
+                  delay: 0.3,
+                }}
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-800">

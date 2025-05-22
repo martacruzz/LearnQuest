@@ -6,7 +6,8 @@ const AchievementsSection = () => {
       icon: "✅",
       color: "bg-blue-500",
       description: "Complete your first task",
-      progress: 2, // 1/1 completed
+      progress: 1, // 1/1 completed
+      maxProgress: 1,
     },
     {
       id: 2,
@@ -15,6 +16,7 @@ const AchievementsSection = () => {
       color: "bg-yellow-500",
       description: "Complete 10 tasks",
       progress: 7, // 7/10 completed
+      maxProgress: 10,
     },
     {
       id: 3,
@@ -22,7 +24,8 @@ const AchievementsSection = () => {
       icon: "🌟",
       color: "bg-purple-500",
       description: "Complete all tasks in a week",
-      progress: 2, // 0/1 completed
+      progress: 1, // 0/1 completed
+      maxProgress: 1,
     },
     {
       id: 4,
@@ -31,6 +34,7 @@ const AchievementsSection = () => {
       color: "bg-green-500",
       description: "Complete all tasks in one subject",
       progress: 2, // 2/5 completed
+      maxProgress: 5,
     },
     {
       id: 5,
@@ -39,6 +43,7 @@ const AchievementsSection = () => {
       color: "bg-orange-500",
       description: "Complete 5 tasks before deadline",
       progress: 3, // 3/5 completed
+      maxProgress: 5,
     },
     {
       id: 6,
@@ -46,7 +51,8 @@ const AchievementsSection = () => {
       icon: "💰",
       color: "bg-emerald-500",
       description: "Earn 1000 XP from tasks",
-      progress: 1000, // 650/1000 completed
+      progress: 1514, // 650/1000 completed
+      maxProgress: 1000,
     },
   ];
 
@@ -55,41 +61,32 @@ const AchievementsSection = () => {
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Task Achievements</h2>
       
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        {achievements.map((achievement) => (
+        {achievements.map(({ id, title, icon, color, description, progress, maxProgress }) => (
           <div 
-            key={achievement.id} 
+            key={id} 
             className={`p-4 rounded-lg border ${
-              achievement.progress > 0 ? 'border-transparent' : 'border-gray-200 opacity-60'
+              progress > 0 ? 'border-transparent' : 'border-gray-200 opacity-60'
             }`}
           >
-            <div className={`w-16 h-16 ${achievement.color} rounded-full flex items-center justify-center text-3xl mx-auto mb-3`}>
-              {achievement.icon}
+            <div className={`w-16 h-16 ${color} rounded-full flex items-center justify-center text-3xl mx-auto mb-3`}>
+              {icon}
             </div>
-            <h3 className="font-semibold text-center">{achievement.title}</h3>
-            <p className="text-sm text-gray-600 text-center mb-2">{achievement.description}</p>
+            <h3 className="font-semibold text-center">{title}</h3>
+            <p className="text-sm text-gray-600 text-center mb-2">{description}</p>
             
-            {achievement.progress > 0 && (
+            {progress > 0 && (
               <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                 <div 
-                  className={`${achievement.color} h-2 rounded-full`} 
+                  className={`${color} h-2 rounded-full`} 
                   style={{
-                    width: `${Math.min(100, (achievement.progress / 
-                      (achievement.title.includes('XP') ? 1000 : 
-                      achievement.title.includes('Task Champion') ? 10 : 
-                       achievement.title.includes('Complete all') ? 1 : 
-                       achievement.title.includes('10') ? 10 : 5)) * 100)}%`
+                    width: `${Math.min(100, (progress / maxProgress) * 100)}%`
                   }}
                 ></div>
               </div>
             )}
             
             <p className="text-xs text-gray-500 text-center mt-1">
-              {achievement.progress > 0 ? (
-                `${achievement.progress}/${achievement.title.includes('XP') ? '1000' : 
-                  achievement.title.includes('Task Champion') ? '10' : 
-                  achievement.title.includes('Complete all') ? '1' : 
-                  achievement.title.includes('10') ? '10' : '5'}`
-              ) : 'Not started'}
+              {progress > 0 ? `${progress}/${maxProgress}` : 'Not started'}
             </p>
           </div>
         ))}
